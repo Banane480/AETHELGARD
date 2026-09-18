@@ -30,6 +30,7 @@ func (c Character) DisplayInfo() {
 	fmt.Printf("Classe   : %s\n", c.Class)
 	fmt.Printf("Niveau   : %d\n", c.Level)
 	fmt.Printf("PV       : %d / %d\n", c.CurrentHP, c.MaxHP)
+	fmt.Printf("Skills   : %s\n", c.Skill)
 	fmt.Println("Inventaire :")
 	for _, item := range c.Inventory {
 		fmt.Printf(" - %s\n", item)
