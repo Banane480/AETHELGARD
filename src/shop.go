@@ -2,19 +2,21 @@ package main
 
 import "fmt"
 
-// Merchant ouvre la boutique du marchand (Tâche 7 - Version gratuite)
 func (c *Character) Merchant() {
 	for {
 		fmt.Println()
-		fmt.Println("╔══════════════════════════════════════════╗")
-		fmt.Println("║           🛒 ÉCHOPE DU MARCHAND          ║")
-		fmt.Println("║          « Tout est gratuit ici ! »      ║")
-		fmt.Println("╠══════════════════════════════════════════╣")
-		fmt.Println("║  [1] 🧪 Potion de soin (Gratuit)         ║")
-		fmt.Println("║  [2] ☠️ Potion de poison (Gratuit)       ║")
-		fmt.Println("║  [0] 🚪 Retourner au menu principal      ║")
-		fmt.Println("╚══════════════════════════════════════════╝")
-		fmt.Print("▶ Que souhaitez-vous prendre ? : ")
+		fmt.Println("╔════════════════════════════════════════════════╗")
+		fmt.Println("║             [ ÉCHOPE DU MARCHAND ]             ║")
+		fmt.Printf("║  Bourse : %-37s║\n", fmt.Sprintf("%d $", c.Money))
+		fmt.Println("╠════════════════════════════════════════════════╣")
+		fmt.Println("║  [1] Potion de soin                   (3 $)    ║")
+		fmt.Println("║  [2] Potion de poison                 (6 $)    ║")
+		fmt.Println("║  [3] Fourrure de Loup                 (4 $)    ║")
+		fmt.Println("║  [4] Minerai de Fer                   (7 $)    ║")
+		fmt.Println("║  [5] Livre de Sort : Boule de Feu    (25 $)    ║")
+		fmt.Println("║  [0] Retourner au menu principal               ║")
+		fmt.Println("╚════════════════════════════════════════════════╝")
+		fmt.Print("▶ Que souhaitez-vous acheter ? : ")
 
 		var choix int
 		fmt.Scan(&choix)
@@ -22,9 +24,21 @@ func (c *Character) Merchant() {
 
 		switch choix {
 		case 1:
-			c.AddInventory("Potion de soin")
+			c.BuyItem("Potion de soin", 3)
 		case 2:
-			c.AddInventory("Potion de poison")
+			c.BuyItem("Potion de poison", 6)
+		case 3:
+			c.BuyItem("Fourrure de Loup", 4)
+		case 4:
+			c.BuyItem("Minerai de Fer", 7)
+		case 5:
+			if c.Money < 25 {
+				fmt.Println("❌ Vous n'avez pas assez d'argent pour acheter ce livre !")
+			} else {
+				c.Money -= 25
+				*c = SpellBook(*c, "Boule de Feu")
+				fmt.Printf("💰 Argent restant : %d $\n", c.Money)
+			}
 		case 0:
 			fmt.Println("👋 Le marchand vous salue. À bientôt !")
 			return
@@ -32,4 +46,20 @@ func (c *Character) Merchant() {
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
 		}
 	}
+}
+
+func (c *Character) BuyItem(item string, price int) {
+	if c.Money < price {
+		fmt.Printf("❌ Vous n'avez pas assez d'argent pour acheter : %s (%d $ requis, vous avez %d $)\n", item, price, c.Money)
+		return
+	}
+
+	if len(c.Inventory) >= c.MaxInventory {
+		fmt.Printf("❌ Votre inventaire est plein (%d/%d) ! Impossible d'acheter : %s\n", len(c.Inventory), c.MaxInventory, item)
+		return
+	}
+
+	c.Money -= price
+	c.AddInventory(item)
+	fmt.Printf("💰 Achat réussi ! Argent restant : %d $\n", c.Money)
 }

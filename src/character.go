@@ -27,7 +27,7 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 		Inventory:    inventory,
 		Skill:        []string{"Coup de poing"},
 		MaxInventory: 10,
-		Money:        100,
+		Money:        25,
 	}
 }
 
