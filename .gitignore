@@ -1,0 +1,15 @@
+# IDE
+.idea/
+.vscode/
+
+# Binaires & build
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+
+# Fichiers temporaires & OS
+.DS_Store
+Thumbs.db
