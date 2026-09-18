@@ -63,7 +63,7 @@ func CharacterCreation() Character {
 	fmt.Println("╚══════════════════════════════════════════╝")
 
 	for {
-		fmt.Println("Entrez le nm de vôtre héros : ")
+		fmt.Println("Entrez le nom de vôtre héros : ")
 		fmt.Scan(&name)
 		if len(name) > 0 {
 			name = strings.ToUpper(string(name[0])) + strings.ToLower(name[1:])
