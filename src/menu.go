@@ -15,6 +15,7 @@ func (c *Character) MainMenu() {
 		fmt.Println("║  [4] ⚔️ Combat d'entrainement            ║")
 		fmt.Println("║  [5] 🛒 Visiter le marchand              ║")
 		fmt.Println("║  [6] 🔨 Visiter le forgeron              ║")
+		fmt.Println("║  [7] 🎵 Qui sont-ils ? (Mission 6)       ║")
 		fmt.Println("║  [0] 🚪 Quitter le jeu                   ║")
 		fmt.Println("╚══════════════════════════════════════════╝")
 		fmt.Print("▶ Entrez votre choix : ")
@@ -36,6 +37,8 @@ func (c *Character) MainMenu() {
 			c.Merchant()
 		case 6:
 			c.Blacksmith()
+		case 7:
+			c.WhoAreThey()
 		case 0:
 			fmt.Println("👋 Merci d'avoir joué ! À bientôt.")
 			return
