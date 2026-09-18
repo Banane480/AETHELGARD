@@ -26,7 +26,22 @@ func CharacterTurn(c Character, m Monster) (Character, Monster) {
 
 		case 2:
 			c.AccessInventory()
-			return c, m
+			fmt.Println("\nVoulez-vous utiliser un objet ?")
+			fmt.Println("1 : Potion de soin")
+			fmt.Println("2 : Retour")
+			fmt.Print("Votre choix : ")
+			var itemChoice int
+			fmt.Scan(&itemChoice)
+
+			if itemChoice == 1 {
+				c.TakePot()
+				return c, m
+			} else if itemChoice == 2 {
+				continue // Retourne au menu de sélection d'action sans gaspiller le tour
+			} else {
+				fmt.Println("Choix invalide.")
+				continue
+			}
 
 		default:
 			fmt.Println("Choix invalide, veuillez réessayer.")

@@ -12,7 +12,8 @@ func (c *Character) MainMenu() {
 		fmt.Println("║  [1] 📜 Fiche du personnage              ║")
 		fmt.Println("║  [2] 🎒 Consulter l'inventaire           ║")
 		fmt.Println("║  [3] 🧪 Boire une potion de soin         ║")
-		fmt.Println("║  [4] 🛒 Visiter le marchand              ║")
+		fmt.Println("║  [4] ⚔️ Combat d'entrainement            ║")
+		fmt.Println("║  [5] 🛒 Visiter le marchand              ║")
 		fmt.Println("║  [0] 🚪 Quitter le jeu                   ║")
 		fmt.Println("╚══════════════════════════════════════════╝")
 		fmt.Print("▶ Entrez votre choix : ")
@@ -29,6 +30,8 @@ func (c *Character) MainMenu() {
 		case 3:
 			c.TakePot()
 		case 4:
+			*c = TrainingFight(*c)
+		case 5:
 			c.Merchant()
 		case 0:
 			fmt.Println("👋 Merci d'avoir joué ! À bientôt.")
