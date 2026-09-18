@@ -13,6 +13,7 @@ type Character struct {
 	CurrentHP int
 	Inventory []string
 	Skill     []string
+	Money     int
 }
 
 func InitCharacter(name string, class string, level int, maxHP int, currentHP int, inventory []string) Character {
@@ -24,6 +25,7 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 		CurrentHP: currentHP,
 		Inventory: inventory,
 		Skill:     []string{"Coup de poing"},
+		Money:     100,
 	}
 }
 
@@ -87,6 +89,7 @@ func (c Character) DisplayInfo() {
 	fmt.Printf("║  Niveau   : %-26d ║\n", c.Level)
 	fmt.Printf("║  PV       : %d / %-20d ║\n", c.CurrentHP, c.MaxHP)
 	fmt.Printf("║  Sorts    : %-26v ║\n", c.Skill)
+	fmt.Printf("║  Argent   : %-26s ║\n", fmt.Sprintf("%d $", c.Money))
 	fmt.Println("╠══════════════════════════════════════════╣")
 	fmt.Printf("║  Sac      : %d objet(s)                   ║\n", len(c.Inventory))
 	fmt.Println("╚══════════════════════════════════════════╝")
