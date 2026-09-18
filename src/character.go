@@ -25,15 +25,17 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 }
 
 func (c Character) DisplayInfo() {
-	fmt.Println("--- FICHE DU PERSONNAGE ---")
-	fmt.Printf("Nom      : %s\n", c.Name)
-	fmt.Printf("Classe   : %s\n", c.Class)
-	fmt.Printf("Niveau   : %d\n", c.Level)
-	fmt.Printf("PV       : %d / %d\n", c.CurrentHP, c.MaxHP)
-	fmt.Printf("Skills   : %s\n", c.Skill)
-	fmt.Println("Inventaire :")
-	for _, item := range c.Inventory {
-		fmt.Printf(" - %s\n", item)
-	}
-	fmt.Println("---------------------------")
+	fmt.Println()
+	fmt.Println("╔══════════════════════════════════════════╗")
+	fmt.Println("║         📜 FICHE DU PERSONNAGE           ║")
+	fmt.Println("╠══════════════════════════════════════════╣")
+	fmt.Printf("║  Nom      : %-26s ║\n", c.Name)
+	fmt.Printf("║  Classe   : %-26s ║\n", c.Class)
+	fmt.Printf("║  Niveau   : %-26d ║\n", c.Level)
+	fmt.Printf("║  PV       : %d / %-20d ║\n", c.CurrentHP, c.MaxHP)
+	fmt.Printf("║  Sorts    : %-26v ║\n", c.Skill)
+	fmt.Println("╠══════════════════════════════════════════╣")
+	fmt.Printf("║  Sac      : %d objet(s)                   ║\n", len(c.Inventory))
+	fmt.Println("╚══════════════════════════════════════════╝")
+	fmt.Println()
 }
