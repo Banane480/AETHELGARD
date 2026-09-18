@@ -8,3 +8,14 @@ type Character struct {
 	CurrentHP int
 	Inventory []string
 }
+
+func InitCharacter(name string, class string, level int, maxHP int, currentHP int, inventory []string) Character {
+	return Character{
+		Name:      name,
+		Class:     class,
+		Level:     level,
+		MaxHP:     maxHP,
+		CurrentHP: currentHP,
+		Inventory: inventory,
+	}
+}
