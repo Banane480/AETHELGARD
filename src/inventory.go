@@ -28,3 +28,17 @@ func (c *Character) TakePot() {
 	}
 	fmt.Println("Vous n'avez pas de potion de soin !")
 }
+
+func (c *Character) AddInventory(item string) {
+	c.Inventory = append(c.Inventory, item)
+	fmt.Printf("📦 Vous avez obtenu : %s\n", item)
+}
+
+func (c *Character) RemoveInventory(item string) {
+	for i, v := range c.Inventory {
+		if v == item {
+			c.Inventory = append(c.Inventory[:i], c.Inventory[i+1:]...)
+			return
+		}
+	}
+}
