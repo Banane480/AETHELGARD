@@ -25,7 +25,7 @@ func CharacterTurn(c Character, m Monster) (Character, Monster) {
 			return c, m
 
 		case 2:
-			fmt.Println("Accès à l'inventaire en combat...")
+			c.AccessInventory()
 			return c, m
 
 		default:
