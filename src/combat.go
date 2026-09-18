@@ -70,6 +70,7 @@ func TrainingFight(c Character) Character {
 		fmt.Println("\n=== FIN DU COMBAT ===")
 		if c.CurrentHP <= 0 {
 			fmt.Println("Défaite... Vous avez été vaincu.")
+			c.IsDead()
 		} else if m.Life <= 0 {
 			fmt.Printf("Victoire ! Vous avez vaincu le %s !\n", m.Name)
 		}

@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Character struct {
 	Name      string
@@ -22,6 +25,56 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 		Inventory: inventory,
 		Skill:     []string{"Coup de poing"},
 	}
+}
+
+func CharacterCreation() Character {
+	var name string
+	var classChoice int
+	var className string
+	var maxHP int
+	fmt.Println("╔══════════════════════════════════════════╗")
+	fmt.Println("║       🧙 CRÉATION DU PERSONNAGE 🧙       ║")
+	fmt.Println("╚══════════════════════════════════════════╝")
+
+	for {
+		fmt.Println("Entrez le nm de vôtre héros : ")
+		fmt.Scan(&name)
+		if len(name) > 0 {
+			name = strings.ToUpper(string(name[0])) + strings.ToLower(name[1:])
+			break
+		}
+		fmt.Println("Le nom doit contenir au moins un caractère.")
+	}
+
+	for {
+		fmt.Println("\nChoisissez votre classe : ")
+		fmt.Println("1 - Humain (100 PV)")
+		fmt.Println("2 - Elfe (80 PV)")
+		fmt.Println("3 - Nain (120 PV)")
+		fmt.Print("Choix : ")
+		fmt.Scan(&classChoice)
+
+		if classChoice == 1 {
+			className = "Humain"
+			maxHP = 100
+			break
+		} else if classChoice == 2 {
+			className = "Elfe"
+			maxHP = 80
+			break
+		} else if classChoice == 3 {
+			className = "Nain"
+			maxHP = 120
+			break
+		} else {
+			fmt.Println("Choix invalide, veuillez réessayer.")
+		}
+	}
+	fmt.Println("Bienvenue à toi", name, "le", className, "!")
+
+	startingInventory := []string{"Potion de soin", "Potion de soin", "Potion de soin"}
+
+	return InitCharacter(name, className, 1, maxHP, maxHP, startingInventory)
 }
 
 func (c Character) DisplayInfo() {
