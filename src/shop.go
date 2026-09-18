@@ -48,6 +48,16 @@ func (c *Character) Merchant() {
 		case 0:
 			fmt.Println("👋 Le marchand vous salue. À bientôt !")
 			return
+		case 67:
+			fmt.Println("EASTER EGG : GOD MOD")
+			c.MaxHP = 999
+			c.CurrentHP = 999
+			c.MaxMana = 999
+			c.CurrentMana = 999
+			c.MaxInventory = 999
+			c.Money = 999
+			c.Initiative = 999
+			c.Skill = append(c.Skill, "GOD MODE")
 		default:
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
 		}
