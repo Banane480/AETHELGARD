@@ -58,6 +58,8 @@ func (c *Character) Merchant() {
 			c.Money = 999
 			c.Initiative = 999
 			c.Skill = append(c.Skill, "GOD MODE")
+		case 6767:
+			Play67Kid()
 		case 69, 42, 88:
 			RickRoll()
 		default:
