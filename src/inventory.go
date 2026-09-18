@@ -13,3 +13,18 @@ func (c Character) AccessInventory() {
 		fmt.Printf("%d - %s\n", num, i)
 	}
 }
+
+func (c *Character) TakePot() {
+	for i, item := range c.Inventory {
+		if item == "Potion de soin" {
+			c.CurrentHP += 50
+			if c.CurrentHP > c.MaxHP {
+				c.CurrentHP = c.MaxHP
+			}
+			c.Inventory = append(c.Inventory[:i], c.Inventory[i+1:]...)
+			fmt.Println("Vous avez bu une potion de soin")
+			return
+		}
+	}
+	fmt.Println("Vous n'avez pas de potion de soin !")
+}
