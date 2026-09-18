@@ -128,3 +128,49 @@ func (c *Character) IsDead() bool {
 	}
 	return false
 }
+
+func (c *Character) EquipItem(itemName string) {
+	if !c.RemoveInventory(itemName) {
+		fmt.Printf("❌ Vous ne possédez pas : %s dans votre inventaire !\n", itemName)
+		return
+	}
+
+	switch itemName {
+	case "Chapeau de l'aventurier":
+		if c.Equipment.Head == itemName {
+			fmt.Println("⚠️ Vous portez déjà ce chapeau !")
+			c.AddInventory(itemName)
+			return
+		}
+		c.Equipment.Head = itemName
+		c.MaxHP += 10
+		c.CurrentHP += 10
+		fmt.Println("👒 Vous avez équipé le Chapeau de l'aventurier (+10 PV max) !")
+
+	case "Tunique de l'aventurier":
+		if c.Equipment.Body == itemName {
+			fmt.Println("⚠️ Vous portez déjà cette tunique !")
+			c.AddInventory(itemName)
+			return
+		}
+		c.Equipment.Body = itemName
+		c.MaxHP += 25
+		c.CurrentHP += 25
+		fmt.Println("🥋 Vous avez équipé la Tunique de l'aventurier (+25 PV max) !")
+
+	case "Bottes de l'aventurier":
+		if c.Equipment.Feet == itemName {
+			fmt.Println("⚠️ Vous portez déjà ces bottes !")
+			c.AddInventory(itemName)
+			return
+		}
+		c.Equipment.Feet = itemName
+		c.MaxHP += 15
+		c.CurrentHP += 15
+		fmt.Println("👢 Vous avez équipé les Bottes de l'aventurier (+15 PV max) !")
+
+	default:
+		c.AddInventory(itemName)
+		fmt.Println("❌ Cet objet ne peut pas être équipé.")
+	}
+}
