@@ -39,3 +39,18 @@ func (c Character) DisplayInfo() {
 	fmt.Println("╚══════════════════════════════════════════╝")
 	fmt.Println()
 }
+
+func (c *Character) IsDead() bool {
+	if c.CurrentHP <= 0 {
+		fmt.Println()
+		fmt.Println("☠️ ======================================== ☠️")
+		fmt.Println("             VOUS ÊTES MORT...             ")
+		fmt.Println("   Le destin vous accorde une seconde chance !  ")
+		fmt.Println("☠️ ======================================== ☠️")
+
+		c.CurrentHP = c.MaxHP / 2
+		fmt.Printf("💖 Vous revenez à la vie avec %d / %d PV.\n\n", c.CurrentHP, c.MaxHP)
+		return true
+	}
+	return false
+}
