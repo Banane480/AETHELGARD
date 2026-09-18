@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func CharacterTurn(c Character, m Monster) (Character, Monster) {
+func CharacterTurn(c *Character, m *Monster) {
 	for {
 		var choice int
 
@@ -22,7 +22,7 @@ func CharacterTurn(c Character, m Monster) (Character, Monster) {
 			}
 			fmt.Printf(" %s attaque et inflige %d dégâts à %s !\n", c.Name, damage, m.Name)
 			fmt.Printf("Il reste %d/%d PV à %s.\n", m.Life, m.LifeMax, m.Name)
-			return c, m
+			return
 
 		case 2:
 			c.AccessInventory()
@@ -35,7 +35,7 @@ func CharacterTurn(c Character, m Monster) (Character, Monster) {
 
 			if itemChoice == 1 {
 				c.TakePot()
-				return c, m
+				return
 			} else if itemChoice == 2 {
 				continue // Retourne au menu de sélection d'action sans gaspiller le tour
 			} else {
@@ -49,7 +49,7 @@ func CharacterTurn(c Character, m Monster) (Character, Monster) {
 	}
 }
 
-func TrainingFight(c Character) Character {
+func (c *Character) TrainingFight() {
 	turn := 1
 	m := InitGoblin("Gobelin d'entrainement", 40, 40, 5, 5)
 
@@ -59,14 +59,14 @@ func TrainingFight(c Character) Character {
 		fmt.Printf("\n--- TOUR %d ---\n", turn)
 
 		if c.Initiative >= m.Initiative {
-			c, m = CharacterTurn(c, m)
+			CharacterTurn(c, &m)
 			if m.Life > 0 {
-				c = GoblinPattern(m, c, turn)
+				GoblinPattern(&m, c, turn)
 			}
 		} else {
-			c = GoblinPattern(m, c, turn)
+			GoblinPattern(&m, c, turn)
 			if c.CurrentHP > 0 {
-				c, m = CharacterTurn(c, m)
+				CharacterTurn(c, &m)
 			}
 		}
 
@@ -81,6 +81,4 @@ func TrainingFight(c Character) Character {
 			fmt.Printf("Victoire ! Vous avez vaincu le %s !\n", m.Name)
 		}
 	}
-
-	return c
 }

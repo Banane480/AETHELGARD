@@ -31,7 +31,7 @@ func (c *Character) MainMenu() {
 		case 3:
 			c.TakePot()
 		case 4:
-			*c = TrainingFight(*c)
+			c.TrainingFight()
 		case 5:
 			c.Merchant()
 		case 6:
