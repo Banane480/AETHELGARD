@@ -33,3 +33,33 @@ func CharacterTurn(c Character, m Monster) (Character, Monster) {
 		}
 	}
 }
+
+func TrainingFight(c Character) Character {
+	turn := 1
+	m := InitGoblin("Gobelin d'entrainement", 40, 40, 5)
+
+	fmt.Println("\n=== DÉBUT DU COMBAT D'ENTRAÎNEMENT ===")
+
+	for m.Life > 0 && c.CurrentHP > 0 {
+		fmt.Printf("\n--- TOUR %d ---\n", turn)
+
+		c, m = CharacterTurn(c, m)
+
+		if m.Life > 0 {
+			c = GoblinPattern(m, c, turn)
+		}
+
+		turn++
+	}
+	if m.Life <= 0 || c.CurrentHP <= 0 {
+		fmt.Println("\n=== FIN DU COMBAT ===")
+		if c.CurrentHP <= 0 {
+			fmt.Println("Défaite... Vous avez été vaincu.")
+		} else if m.Life <= 0 {
+			fmt.Printf("Victoire ! Vous avez vaincu le %s !\n", m.Name)
+		}
+	}
+
+	return c
+}
+
