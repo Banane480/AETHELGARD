@@ -32,6 +32,21 @@ func (c *Character) TakePot() {
 	fmt.Println("Vous n'avez pas de potion de soin !")
 }
 
+func (c *Character) TakeManaPot() {
+	for i, item := range c.Inventory {
+		if item == "Potion de mana" {
+			c.CurrentMana += 30
+			if c.CurrentMana > c.MaxMana {
+				c.CurrentMana = c.MaxMana
+			}
+			c.Inventory = append(c.Inventory[:i], c.Inventory[i+1:]...)
+			fmt.Printf("🧪 Vous buvez une potion de mana (+30 Mana). Mana actuel : %d/%d\n", c.CurrentMana, c.MaxMana)
+			return
+		}
+	}
+	fmt.Println("❌ Vous n'avez pas de potion de mana !")
+}
+
 func (c *Character) AddInventory(item string) bool {
 	if len(c.Inventory) >= c.MaxInventory {
 		fmt.Printf("❌ Inventaire plein (%d/%d objets) ! Impossible de prendre : %s\n", len(c.Inventory), c.MaxInventory, item)

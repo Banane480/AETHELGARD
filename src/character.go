@@ -16,6 +16,8 @@ type Character struct {
 	MaxInventory int
 	Money        int
 	Initiative   int
+	MaxMana      int
+	CurrentMana  int
 	CurrentXP    int
 	MaxXP        int
 	Equipment    Equipment
@@ -40,6 +42,8 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 		Money:        100,
 		Initiative:   10,
 		MaxXP:        100,
+		MaxMana:      100,
+		CurrentMana:  100,
 		CurrentXP:    0,
 		Equipment: Equipment{
 			Head: "Aucun",
@@ -104,19 +108,21 @@ func (c Character) DisplayInfo() {
 	fmt.Println("╔══════════════════════════════════════════╗")
 	fmt.Println("║         📜 FICHE DU PERSONNAGE           ║")
 	fmt.Println("╠══════════════════════════════════════════╣")
-	fmt.Printf("║  Nom      : %-26s ║\n", c.Name)
-	fmt.Printf("║  Classe   : %-26s ║\n", c.Class)
-	fmt.Printf("║  Niveau   : %-26d ║\n", c.Level)
-	fmt.Printf("║  PV       : %d / %-20d ║\n", c.CurrentHP, c.MaxHP)
-	fmt.Printf("║  Sorts    : %-26v ║\n", c.Skill)
-	fmt.Printf("║  Argent   : %-26s ║\n", fmt.Sprintf("%d $", c.Money))
-	fmt.Printf("║  Initiative: %-26d ║\n", c.Initiative)
+	fmt.Printf("║  Nom       : %-25s ║\n", c.Name)
+	fmt.Printf("║  Classe    : %-25s ║\n", c.Class)
+	fmt.Printf("║  Niveau    : %-25d ║\n", c.Level)
+	fmt.Printf("║  XP        : %d / %-19d ║\n", c.CurrentXP, c.MaxXP)
+	fmt.Printf("║  PV        : %d / %-19d ║\n", c.CurrentHP, c.MaxHP)
+	fmt.Printf("║  Mana      : %d / %-19d ║\n", c.CurrentMana, c.MaxMana)
+	fmt.Printf("║  Sorts     : %-25v ║\n", c.Skill)
+	fmt.Printf("║  Argent    : %-25s ║\n", fmt.Sprintf("%d $", c.Money))
+	fmt.Printf("║  Initiative: %-25d ║\n", c.Initiative)
 	fmt.Println("╠══════════════════════════════════════════╣")
-	fmt.Printf("║  Tête     : %-26s ║\n", c.Equipment.Head)
-	fmt.Printf("║  Torse    : %-26s ║\n", c.Equipment.Body)
-	fmt.Printf("║  Pieds    : %-26s ║\n", c.Equipment.Feet)
+	fmt.Printf("║  Tête      : %-25s ║\n", c.Equipment.Head)
+	fmt.Printf("║  Torse     : %-25s ║\n", c.Equipment.Body)
+	fmt.Printf("║  Pieds     : %-25s ║\n", c.Equipment.Feet)
 	fmt.Println("╠══════════════════════════════════════════╣")
-	fmt.Printf("║  Sac      : %d objet(s)                   ║\n", len(c.Inventory))
+	fmt.Printf("║  Sac       : %d objet(s)                    ║\n", len(c.Inventory))
 	fmt.Println("╚══════════════════════════════════════════╝")
 	fmt.Println()
 }
