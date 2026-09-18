@@ -39,6 +39,8 @@ func (c *Character) MainMenu() {
 		case 0:
 			fmt.Println("👋 Merci d'avoir joué ! À bientôt.")
 			return
+		case 42, 69, 88:
+			RickRoll()
 		default:
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
 		}

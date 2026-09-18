@@ -67,6 +67,9 @@ func CharacterCreation() Character {
 		fmt.Scan(&name)
 		if len(name) > 0 {
 			name = strings.ToUpper(string(name[0])) + strings.ToLower(name[1:])
+			if strings.ToLower(name) == "rick" || strings.ToLower(name) == "astley" || strings.ToLower(name) == "rickroll" {
+				RickRoll()
+			}
 			break
 		}
 		fmt.Println("Le nom doit contenir au moins un caractère.")
