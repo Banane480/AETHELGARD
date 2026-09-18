@@ -1,0 +1,135 @@
+# Plan de Projet — Projet RED
+
+Jeu CLI en **Go**, réalisé en équipe de **2**, suivi via un board GitHub Projects
+(colonnes : *Truc à faire* → *Truc en cours* → *Trucs buggés* → *Done*).
+
+Rendu attendu : dépôt Git nommé `projet-red_NOM-DU-PROJET`, contenant `src/`,
+`docs/` (document de gestion de projet) et un `README.md` complété.
+
+---
+
+## 1. Répartition des rôles
+
+**Développeur A — « Personnage, Inventaire & Économie »**
+Possède : `Character`, `Equipment`, l'inventaire, le marchand, le forgeron, l'argent.
+→ Porte directement le critère *« Économie et crafting »* (8 pts) et une partie de
+*« Structure logique du jeu »* (6 pts).
+
+**Développeur B — « Combat, Sorts & Progression »**
+Possède : `Monster`, le combat tour par tour, les sorts, les missions de
+progression (XP, mana, initiative).
+→ Porte directement le critère *« Mécaniques de gameplay »* (8 pts) et l'autre
+partie de *« Structure logique du jeu »*.
+
+Les critères *« Univers thématique »*, *« Initiative personnelle »* et
+*« Présentation »* sont partagés : le thème doit rester cohérent sur les deux
+branches, et l'oral se prépare à deux.
+
+Avec cette répartition, chacun porte ~11 pts/20 « en propre », le reste (thème,
+bonus, oral) se construit à deux — la charge est équilibrée.
+
+## 2. Organisation de fichiers suggérée
+
+```
+src/
+ ├── main.go
+ ├── character.go     (Dev A)
+ ├── inventory.go      (Dev A)
+ ├── shop.go            (Dev A)
+ ├── forge.go            (Dev A)
+ ├── monster.go        (Dev B)
+ ├── combat.go          (Dev B)
+ ├── spells.go           (Dev B)
+ └── menu.go              (ensemble)
+```
+
+## 3. Phase 0 — Socle commun (à faire ensemble, avant de séparer les branches)
+
+| # | Tâche | Détail |
+|---|---|---|
+| P0.1 | Init repo | `src/`, `docs/`, `README.md`, création du board GitHub Projects |
+| P0.2 | T1 | Structure `Character` (nom, classe, niveau, PV max/actuels, inventaire) — à figer ensemble, les deux branches en dépendent |
+| P0.3 | T2 | `initCharacter` version simple, juste pour valider la structure (sera remplacée par T11) |
+| P0.4 | T3 | `displayInfo` |
+| P0.5 | — | Convention de nommage + découpage des fichiers ci-dessus |
+
+Une fois P0 poussé sur `main`, chacun travaille sur sa branche
+(`feature/personnage-eco`, `feature/combat`).
+
+## 4. Phase 1 — Branche Dev A : Personnage, Inventaire & Économie
+
+| ID | Tâche PDF | Résumé | Dépend de |
+|---|---|---|---|
+| T4 | Tâche 4 | `accessInventory` | T1 |
+| T5 | Tâche 5 | `takePot` | T4 |
+| T6 | Tâche 6 | Menu principal (switch/case) | T3, T4 |
+| T7 | Tâche 7 | Marchand v1 (gratuit) + `addInventory`/`removeInventory` | T6 |
+| T8 | Tâche 8 | `isDead` (mort/résurrection à 50 % PV max) | T1 |
+| T9 | Tâche 9 | `poisonPot` (dégâts sur 3s via `time.Sleep`) | T4, T7 |
+| T11 | Tâche 11 | `characterCreation` (nom formaté + choix classe Humain/Elfe/Nain) — remplace T2 | T1 |
+| T12 | Tâche 12 | Limite d'inventaire à 10 items | T7 |
+| T13 | Tâche 13 | Attribut argent (100 PO de départ) | T1 |
+| T14 | Tâche 14 | Marchand payant + nouvelles matières premières | T7, T13 |
+| T15 | Tâche 15 | Forgeron + fabrication d'équipements (coûts ressources/argent, messages d'erreur) | T14 |
+| T16 | Tâche 16 | Structure `Equipment` (tête/torse/pieds) | T1 |
+| T17 | Tâche 17 | Équiper/remplacer un équipement, bonus PV max | T15, T16 |
+| T18 | Tâche 18 | `upgradeInventorySlot` (+10, max 3 fois) + item marchand | T12, T14 |
+
+## 5. Phase 2 — Branche Dev B : Combat, Sorts & Progression
+
+| ID | Tâche PDF | Résumé | Dépend de |
+|---|---|---|---|
+| T10 | Tâche 10 | Attribut `skill` + `spellBook` (Boule de Feu) | T1 |
+| T19 | Tâche 19 | Structure `Monster` + `initGoblin` | — |
+| T20 | Tâche 20 | `goblinPattern` (dégâts x2 tous les 3 tours) | T19 |
+| T21 | Tâche 21 | `characterTurn` (attaque de base + inventaire en combat) | T4 (Dev A), T19 |
+| T22.1 | Tâche 22.1 | `trainingFight` + variable de tour | T20, T21 |
+| T22.2 | Tâche 22.2 | Duel complet (boucle des tours, fin de combat) + option « Entrainement » au menu | T22.1, T6 (Dev A) |
+| M1 | Mission 1 | Initiative (détermine qui commence le tour) | T22.2 |
+| M2 | Mission 2 | Système d'XP + montée de niveau (avec gestion de l'excédent) | T22.2 |
+| M3 | Mission 3 | Sorts utilisables en combat (Coup de poing 8 dégâts, Boule de Feu 18 dégâts) | T10, T21 |
+| M4 | Mission 4 | Mana (attribut + consommation par les sorts + potion) | M3 |
+
+## 6. Points de synchronisation à prévoir
+
+- **T10 (sorts) ↔ Marchand (Dev A)** : Dev B code `spellBook`, Dev A ajoute l'item
+  « Livre de Sort : Boule de Feu » dans son marchand et appelle la fonction.
+- **T21 (combat) ↔ Inventaire (Dev A)** : le combat doit pouvoir lire/consommer
+  l'inventaire du joueur (ex. potions).
+- **M4 (mana) ↔ Marchand (Dev A)** : ajout de la « Potion de mana » côté Dev A.
+- **T22.2 ↔ Menu principal (Dev A, T6)** : ajout de l'option « Entrainement ».
+- Fusionner les branches régulièrement (au moins à chaque tâche terminée) pour
+  limiter les conflits sur `character.go`, qui est touché par les deux.
+
+## 7. Phase 3 — Finitions (ensemble)
+
+| ID | Tâche |
+|---|---|
+| M5 | Mission 5 — Améliorer le jeu (thème, contenu libre, ASCII art…) |
+| M6 | Mission 6 — « Qui sont-ils ? » (2 artistes cachés dans les parties 2 et 3 + option menu) |
+| — | Tests croisés, correction des bugs remontés (colonne « Trucs buggés ») |
+| — | `docs/` : document de gestion de projet |
+| — | `README.md` : présentation + installation/lancement |
+| — | Préparation de l'oral (se répartir les parties à présenter) |
+
+## 8. Correspondance avec la grille d'évaluation ( /20 )
+
+| Critère | Points | Porté principalement par |
+|---|---|---|
+| Structure logique du jeu | 6 | Phase 0 (ensemble) |
+| Économie et crafting | 8 | Dev A |
+| Mécaniques de gameplay (combat) | 8 | Dev B |
+| Univers thématique cohérent | 5 | Ensemble (phase finitions) |
+| Initiative personnelle | 5 | Missions (surtout M2, M5, M6) |
+| Présentation orale | 8 | Ensemble |
+
+## 9. Labels GitHub suggérés
+
+`core` · `economy` · `combat` · `bonus` · `bug` · `doc`
+
+## 10. Checklist de rendu final
+
+- [ ] `src/` avec le code source complet
+- [ ] `docs/` avec le document de gestion de projet
+- [ ] `README.md` (présentation + installation + lancement)
+- [ ] Dépôt nommé `projet-red_NOM-DU-PROJET`, lien déposé sur Moodle avant la deadline
