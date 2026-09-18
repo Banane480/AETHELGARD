@@ -71,3 +71,21 @@ func (c *Character) PoisonPot() {
 	}
 	fmt.Println("✨ L'effet du poison se dissipe.")
 }
+
+func (c *Character) UppgradeInventorySlot() {
+	if c.MaxInventory >= 40 {
+		fmt.Println("Vous avez atteint la capacité maximale d'inventaire.")
+		return
+	}
+
+	const cost = 30
+	if c.Money < cost {
+		fmt.Println("Vous n'avez pas assez d'argent...")
+		return
+	}
+
+	c.Money -= cost
+	c.MaxInventory += 10
+	fmt.Println("Vous avez amélioré votre inventaire de 10")
+	fmt.Println("Il vous reste", c.Money, "$")
+}

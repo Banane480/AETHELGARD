@@ -63,7 +63,7 @@ func (c *Character) CraftHat() {
 	}
 
 	c.Money -= cost
-	c.RemoveInventory("Plume de courbeau")
+	c.RemoveInventory("Plume de corbeau")
 	c.RemoveInventory("Cuir de sanglier")
 
 	c.AddInventory("Chapeau de l'aventurier")

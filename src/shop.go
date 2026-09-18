@@ -14,6 +14,7 @@ func (c *Character) Merchant() {
 		fmt.Println("║  [3] Fourrure de Loup                 (4 $)    ║")
 		fmt.Println("║  [4] Minerai de Fer                   (7 $)    ║")
 		fmt.Println("║  [5] Livre de Sort : Boule de Feu    (25 $)    ║")
+		fmt.Println("║  [6] Augmentation d'inventaire (+10) (30 $)    ║")
 		fmt.Println("║  [0] Retourner au menu principal               ║")
 		fmt.Println("╚════════════════════════════════════════════════╝")
 		fmt.Print("▶ Que souhaitez-vous acheter ? : ")
@@ -39,6 +40,8 @@ func (c *Character) Merchant() {
 				*c = SpellBook(*c, "Boule de Feu")
 				fmt.Printf("💰 Argent restant : %d $\n", c.Money)
 			}
+		case 6:
+			c.UppgradeInventorySlot()
 		case 0:
 			fmt.Println("👋 Le marchand vous salue. À bientôt !")
 			return
