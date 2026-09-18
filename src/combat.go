@@ -51,7 +51,7 @@ func CharacterTurn(c *Character, m *Monster) {
 				c.TakePot()
 				return
 			} else if itemChoice == 2 {
-				continue // Retourne au menu de sélection d'action sans gaspiller le tour
+				continue
 			} else {
 				fmt.Println("Choix invalide.")
 				continue
@@ -96,4 +96,3 @@ func (c *Character) TrainingFight() {
 		}
 	}
 }
-

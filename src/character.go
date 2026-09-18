@@ -16,6 +16,8 @@ type Character struct {
 	MaxInventory int
 	Money        int
 	Initiative   int
+	CurrentXP    int
+	MaxXP        int
 	Equipment    Equipment
 }
 
@@ -37,6 +39,8 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 		MaxInventory: 10,
 		Money:        100,
 		Initiative:   10,
+		MaxXP:        100,
+		CurrentXP:    0,
 		Equipment: Equipment{
 			Head: "Aucun",
 			Body: "Aucun",
@@ -176,4 +180,22 @@ func (c *Character) EquipItem(itemName string) {
 		c.AddInventory(itemName)
 		fmt.Println("❌ Cet objet ne peut pas être équipé.")
 	}
+}
+
+func (c *Character) GainXP(amount int) {
+	c.CurrentXP += amount
+	fmt.Println("Vous avez gagné", amount, "XP !")
+
+	if c.CurrentXP >= c.MaxXP {
+		c.LevelUp()
+	}
+}
+
+func (c *Character) LevelUp() {
+	c.Level++
+	c.MaxXP += 100
+	c.CurrentXP = 0
+	c.MaxHP += 10
+	c.CurrentHP = c.MaxHP
+	fmt.Println("Bravo, vous êtes niveau", c.Level, "!")
 }
