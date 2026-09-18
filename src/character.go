@@ -6,26 +6,28 @@ import (
 )
 
 type Character struct {
-	Name      string
-	Class     string
-	Level     int
-	MaxHP     int
-	CurrentHP int
-	Inventory []string
-	Skill     []string
-	Money     int
+	Name         string
+	Class        string
+	Level        int
+	MaxHP        int
+	CurrentHP    int
+	Inventory    []string
+	Skill        []string
+	MaxInventory int
+	Money        int
 }
 
 func InitCharacter(name string, class string, level int, maxHP int, currentHP int, inventory []string) Character {
 	return Character{
-		Name:      name,
-		Class:     class,
-		Level:     level,
-		MaxHP:     maxHP,
-		CurrentHP: currentHP,
-		Inventory: inventory,
-		Skill:     []string{"Coup de poing"},
-		Money:     100,
+		Name:         name,
+		Class:        class,
+		Level:        level,
+		MaxHP:        maxHP,
+		CurrentHP:    currentHP,
+		Inventory:    inventory,
+		Skill:        []string{"Coup de poing"},
+		MaxInventory: 10,
+		Money:        100,
 	}
 }
 

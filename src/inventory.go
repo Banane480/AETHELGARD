@@ -32,9 +32,14 @@ func (c *Character) TakePot() {
 	fmt.Println("Vous n'avez pas de potion de soin !")
 }
 
-func (c *Character) AddInventory(item string) {
+func (c *Character) AddInventory(item string) bool {
+	if len(c.Inventory) >= c.MaxInventory {
+		fmt.Printf("❌ Inventaire plein (%d/%d objets) ! Impossible de prendre : %s\n", len(c.Inventory), c.MaxInventory, item)
+		return false
+	}
 	c.Inventory = append(c.Inventory, item)
-	fmt.Printf("📦 Vous avez obtenu : %s\n", item)
+	fmt.Printf("📦 Vous avez obtenu : %s (%d/%d)\n", item, len(c.Inventory), c.MaxInventory)
+	return true
 }
 
 func (c *Character) RemoveInventory(item string) bool {
