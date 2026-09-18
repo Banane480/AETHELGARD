@@ -8,21 +8,35 @@ func CharacterTurn(c *Character, m *Monster) {
 
 		fmt.Println("\n--- C'EST À VOUS DE JOUER ---")
 		fmt.Println("Que voulez-vous faire ?")
-		fmt.Println("1 : Attaque basique")
-		fmt.Println("2 : Utilisez un objet de votre inventaire")
+		fmt.Println("1 : Attaquer / Lancer un sort")
+		fmt.Println("2 : Utiliser un objet de votre inventaire")
 		fmt.Print("Votre choix : ")
 
 		fmt.Scan(&choice)
 		switch choice {
 		case 1:
-			damage := 8
-			m.Life -= damage
-			if m.Life < 0 {
-				m.Life = 0
+			fmt.Println("\n--- SORTS DISPONIBLES ---")
+			for i, skill := range c.Skill {
+				fmt.Printf("%d : %s\n", i+1, skill)
 			}
-			fmt.Printf(" %s attaque et inflige %d dégâts à %s !\n", c.Name, damage, m.Name)
-			fmt.Printf("Il reste %d/%d PV à %s.\n", m.Life, m.LifeMax, m.Name)
-			return
+			fmt.Printf("%d : Retour\n", len(c.Skill)+1)
+			fmt.Print("Quel sort voulez-vous lancer ? : ")
+
+			var spellChoice int
+			fmt.Scan(&spellChoice)
+
+			if spellChoice == len(c.Skill)+1 {
+				continue
+			}
+
+			if spellChoice >= 1 && spellChoice <= len(c.Skill) {
+				selectedSpell := c.Skill[spellChoice-1]
+				CastSpell(selectedSpell, c, m)
+				return
+			} else {
+				fmt.Println("❌ Choix de sort invalide.")
+				continue
+			}
 
 		case 2:
 			c.AccessInventory()
@@ -82,3 +96,4 @@ func (c *Character) TrainingFight() {
 		}
 	}
 }
+
