@@ -51,17 +51,23 @@ func CharacterTurn(c Character, m Monster) (Character, Monster) {
 
 func TrainingFight(c Character) Character {
 	turn := 1
-	m := InitGoblin("Gobelin d'entrainement", 40, 40, 5)
+	m := InitGoblin("Gobelin d'entrainement", 40, 40, 5, 5)
 
 	fmt.Println("\n=== DÉBUT DU COMBAT D'ENTRAÎNEMENT ===")
 
 	for m.Life > 0 && c.CurrentHP > 0 {
 		fmt.Printf("\n--- TOUR %d ---\n", turn)
 
-		c, m = CharacterTurn(c, m)
-
-		if m.Life > 0 {
+		if c.Initiative >= m.Initiative {
+			c, m = CharacterTurn(c, m)
+			if m.Life > 0 {
+				c = GoblinPattern(m, c, turn)
+			}
+		} else {
 			c = GoblinPattern(m, c, turn)
+			if c.CurrentHP > 0 {
+				c, m = CharacterTurn(c, m)
+			}
 		}
 
 		turn++
@@ -78,4 +84,3 @@ func TrainingFight(c Character) Character {
 
 	return c
 }
-

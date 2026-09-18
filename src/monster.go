@@ -3,18 +3,20 @@ package main
 import "fmt"
 
 type Monster struct {
-	Name    string
-	LifeMax int
-	Life    int
-	Attaque int
+	Name       string
+	LifeMax    int
+	Life       int
+	Attaque    int
+	Initiative int
 }
 
-func InitGoblin(name string, lifeMax int, life int, attaque int) Monster {
+func InitGoblin(name string, lifeMax int, life int, attaque int, initiative int) Monster {
 	return Monster{
-		Name:    name,
-		LifeMax: lifeMax,
-		Life:    life,
-		Attaque: attaque,
+		Name:       name,
+		LifeMax:    lifeMax,
+		Life:       life,
+		Attaque:    attaque,
+		Initiative: initiative,
 	}
 }
 

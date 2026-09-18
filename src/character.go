@@ -15,6 +15,7 @@ type Character struct {
 	Skill        []string
 	MaxInventory int
 	Money        int
+	Initiative   int
 	Equipment    Equipment
 }
 
@@ -35,6 +36,7 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 		Skill:        []string{"Coup de poing"},
 		MaxInventory: 10,
 		Money:        100,
+		Initiative:   10,
 		Equipment: Equipment{
 			Head: "Aucun",
 			Body: "Aucun",
@@ -104,6 +106,7 @@ func (c Character) DisplayInfo() {
 	fmt.Printf("║  PV       : %d / %-20d ║\n", c.CurrentHP, c.MaxHP)
 	fmt.Printf("║  Sorts    : %-26v ║\n", c.Skill)
 	fmt.Printf("║  Argent   : %-26s ║\n", fmt.Sprintf("%d $", c.Money))
+	fmt.Printf("║  Initiative: %-26d ║\n", c.Initiative)
 	fmt.Println("╠══════════════════════════════════════════╣")
 	fmt.Printf("║  Tête     : %-26s ║\n", c.Equipment.Head)
 	fmt.Printf("║  Torse    : %-26s ║\n", c.Equipment.Body)
