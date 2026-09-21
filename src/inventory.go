@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func (c Character) AccessInventory() {
+func (c *Character) AccessInventory() {
 	if len(c.Inventory) == 0 {
 		fmt.Println("Ton inventaire est vide!")
 		return

@@ -2,18 +2,16 @@ package main
 
 import "fmt"
 
-func SpellBook(c Character, spellName string) Character {
-	for _, Skill := range c.Skill {
-		if Skill == spellName {
+func (c *Character) SpellBook(spellName string) {
+	for _, skill := range c.Skill {
+		if skill == spellName {
 			fmt.Println("Vous connaissez déjà ce sort")
-
-			return c
+			return
 		}
 	}
 
 	c.Skill = append(c.Skill, spellName)
-	fmt.Println("Vous avez appris le sort ", spellName)
-	return c
+	fmt.Println("Vous avez appris le sort", spellName)
 }
 
 func CastSpell(spell string, c *Character, m *Monster) bool {

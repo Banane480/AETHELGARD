@@ -106,7 +106,7 @@ func CharacterCreation() Character {
 	return InitCharacter(name, className, 1, maxHP, maxHP, startingInventory)
 }
 
-func (c Character) DisplayInfo() {
+func (c *Character) DisplayInfo() {
 	fmt.Println()
 	fmt.Println("╔══════════════════════════════════════════╗")
 	fmt.Println("║         📜 FICHE DU PERSONNAGE           ║")

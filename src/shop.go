@@ -40,7 +40,7 @@ func (c *Character) Merchant() {
 				fmt.Println("❌ Vous n'avez pas assez d'argent pour acheter ce livre !")
 			} else {
 				c.Money -= 25
-				*c = SpellBook(*c, "Boule de Feu")
+				c.SpellBook("Boule de Feu")
 				fmt.Printf("💰 Argent restant : %d $\n", c.Money)
 			}
 		case 7:

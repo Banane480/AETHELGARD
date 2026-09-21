@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func (c Character) CountItem(itemName string) int {
+func (c *Character) CountItem(itemName string) int {
 	count := 0
 	for _, item := range c.Inventory {
 		if item == itemName {
