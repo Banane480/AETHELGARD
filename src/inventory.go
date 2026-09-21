@@ -5,15 +5,63 @@ import (
 	"time"
 )
 
-func (c *Character) AccessInventory() {
+func (c *Character) DisplayInventory() {
 	if len(c.Inventory) == 0 {
-		fmt.Println("Ton inventaire est vide!")
+		fmt.Println("Ton inventaire est vide !")
 		return
 	}
-	num := 0
-	for _, i := range c.Inventory {
-		num++
-		fmt.Printf("%d - %s\n", num, i)
+	for i, item := range c.Inventory {
+		fmt.Printf("%d - %s\n", i+1, item)
+	}
+}
+
+func (c *Character) AccessInventory() {
+	for {
+		fmt.Println("\n--- INVENTAIRE ---")
+		fmt.Printf("Capacité : %d / %d objets\n", len(c.Inventory), c.MaxInventory)
+		if len(c.Inventory) == 0 {
+			fmt.Println("Ton inventaire est vide !")
+			return
+		}
+
+		for i, item := range c.Inventory {
+			fmt.Printf("%d - %s\n", i+1, item)
+		}
+		fmt.Println("0 - Retour")
+
+		fmt.Print("Quel objet souhaitez-vous utiliser / équiper ? (0 pour quitter) : ")
+		var choice int
+		fmt.Scan(&choice)
+		fmt.Println()
+
+		if choice == 0 {
+			return
+		}
+
+		if choice < 1 || choice > len(c.Inventory) {
+			fmt.Println("❌ Choix invalide.")
+			continue
+		}
+
+		selectedItem := c.Inventory[choice-1]
+		c.UseItem(selectedItem)
+	}
+}
+
+func (c *Character) UseItem(item string) {
+	switch item {
+	case "Potion de soin":
+		c.TakePot()
+	case "Potion de mana":
+		c.TakeManaPot()
+	case "Potion de poison":
+		c.PoisonPot()
+	case "Chapeau de l'aventurier", "Tunique de l'aventurier", "Bottes de l'aventurier":
+		c.EquipItem(item)
+	case "Fourrure de loup", "Peau de troll", "Cuir de sanglier", "Plume de corbeau", "Minerai de Fer":
+		fmt.Printf("ℹ️  '%s' est un matériau de craft pour la forge, il ne s'utilise pas directement.\n", item)
+	default:
+		fmt.Printf("❌ Impossible d'utiliser l'objet : %s\n", item)
 	}
 }
 
@@ -25,7 +73,7 @@ func (c *Character) TakePot() {
 				c.CurrentHP = c.MaxHP
 			}
 			c.Inventory = append(c.Inventory[:i], c.Inventory[i+1:]...)
-			fmt.Println("Vous avez bu une potion de soin")
+			fmt.Printf("🧪 Vous avez bu une potion de soin (+50 PV). PV actuels : %d/%d\n", c.CurrentHP, c.MaxHP)
 			return
 		}
 	}
