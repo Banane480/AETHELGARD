@@ -194,15 +194,15 @@ func (c *Character) GainXP(amount int) {
 	c.CurrentXP += amount
 	fmt.Println("Vous avez gagné", amount, "XP !")
 
-	if c.CurrentXP >= c.MaxXP {
+	for c.CurrentXP >= c.MaxXP {
 		c.LevelUp()
 	}
 }
 
 func (c *Character) LevelUp() {
+	c.CurrentXP -= c.MaxXP
 	c.Level++
 	c.MaxXP += 100
-	c.CurrentXP = 0
 	c.MaxHP += 10
 	c.CurrentHP = c.MaxHP
 	fmt.Println("Bravo, vous êtes niveau", c.Level, "!")

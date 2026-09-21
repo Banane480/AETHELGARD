@@ -31,7 +31,9 @@ func CharacterTurn(c *Character, m *Monster) {
 
 			if spellChoice >= 1 && spellChoice <= len(c.Skill) {
 				selectedSpell := c.Skill[spellChoice-1]
-				CastSpell(selectedSpell, c, m)
+				if !CastSpell(selectedSpell, c, m) {
+					continue
+				}
 				return
 			} else {
 				fmt.Println("❌ Choix de sort invalide.")
@@ -105,6 +107,7 @@ func (c *Character) TrainingFight() {
 			c.IsDead()
 		} else if m.Life <= 0 {
 			fmt.Printf("Victoire ! Vous avez vaincu le %s !\n", m.Name)
+			c.GainXP(25)
 		}
 	}
 }
