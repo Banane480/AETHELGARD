@@ -9,14 +9,17 @@ func (c *Character) Merchant() {
 		fmt.Println("║             [ ÉCHOPE DU MARCHAND ]             ║")
 		fmt.Printf("║  Bourse : %-37s║\n", fmt.Sprintf("%d $", c.Money))
 		fmt.Println("╠════════════════════════════════════════════════╣")
-		fmt.Println("║  [1] Potion de soin                   (3 $)    ║")
-		fmt.Println("║  [2] Potion de poison                 (6 $)    ║")
-		fmt.Println("║  [3] Potion de mana                   (10 $)   ║")
-		fmt.Println("║  [4] Fourrure de Loup                 (4 $)    ║")
-		fmt.Println("║  [5] Minerai de Fer                   (7 $)    ║")
-		fmt.Println("║  [6] Livre de Sort : Boule de Feu    (25 $)    ║")
-		fmt.Println("║  [7] Augmentation d'inventaire (+10) (30 $)    ║")
-		fmt.Println("║  [0] Retourner au menu principal               ║")
+		fmt.Println("║  [1]  Potion de soin                  (3 $)    ║")
+		fmt.Println("║  [2]  Potion de poison                (6 $)    ║")
+		fmt.Println("║  [3]  Potion de mana                  (10 $)   ║")
+		fmt.Println("║  [4]  Fourrure de loup                (4 $)    ║")
+		fmt.Println("║  [5]  Peau de troll                   (7 $)    ║")
+		fmt.Println("║  [6]  Cuir de sanglier                (3 $)    ║")
+		fmt.Println("║  [7]  Plume de corbeau                (1 $)    ║")
+		fmt.Println("║  [8]  Minerai de Fer                  (7 $)    ║")
+		fmt.Println("║  [9]  Livre de Sort : Boule de Feu    (25 $)   ║")
+		fmt.Println("║  [10] Augmentation d'inventaire (+10) (30 $)   ║")
+		fmt.Println("║  [0]  Retourner au menu principal              ║")
 		fmt.Println("╚════════════════════════════════════════════════╝")
 		fmt.Print("▶ Que souhaitez-vous acheter ? : ")
 
@@ -32,10 +35,16 @@ func (c *Character) Merchant() {
 		case 3:
 			c.BuyItem("Potion de mana", 10)
 		case 4:
-			c.BuyItem("Fourrure de Loup", 4)
+			c.BuyItem("Fourrure de loup", 4)
 		case 5:
-			c.BuyItem("Minerai de Fer", 7)
+			c.BuyItem("Peau de troll", 7)
 		case 6:
+			c.BuyItem("Cuir de sanglier", 3)
+		case 7:
+			c.BuyItem("Plume de corbeau", 1)
+		case 8:
+			c.BuyItem("Minerai de Fer", 7)
+		case 9:
 			if c.Money < 25 {
 				fmt.Println("❌ Vous n'avez pas assez d'argent pour acheter ce livre !")
 			} else {
@@ -43,7 +52,7 @@ func (c *Character) Merchant() {
 				c.SpellBook("Boule de Feu")
 				fmt.Printf("💰 Argent restant : %d $\n", c.Money)
 			}
-		case 7:
+		case 10:
 			c.UppgradeInventorySlot()
 		case 0:
 			fmt.Println("👋 Le marchand vous salue. À bientôt !")
@@ -60,8 +69,6 @@ func (c *Character) Merchant() {
 			c.Skill = append(c.Skill, "GOD MODE")
 		case 6767:
 			Play67Kid()
-		case 69, 42, 88:
-			RickRoll()
 		default:
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
 		}
