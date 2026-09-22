@@ -85,7 +85,7 @@ func MonsterPattern(m *Monster, c *Character, turn int) {
 	switch m.Name {
 	case "Seigneur de la Lune Rouge":
 		if turn%3 == 0 {
-			damage = int(float64(m.Attaque) * 1.8)
+			damage *= 2
 			fmt.Printf("🔴 [SANG LUNAIRE] %s canalise la puissance astrale et déclenche un CATACLYSME ÉCARLATE ! (%d dégâts)\n", m.Name, damage)
 		} else if turn%2 == 0 {
 			damage = m.Attaque + 4
@@ -107,7 +107,7 @@ func MonsterPattern(m *Monster, c *Character, turn int) {
 			damage *= 2
 			fmt.Printf("💥 Coup critique ! %s utilise une attaque féroce et inflige %d dégâts à %s !\n", m.Name, damage, c.Name)
 		} else {
-			fmt.Printf("🗡️ %s attaque avec férocité et inflige %d dégâts à %s.\n", m.Name, c.Name, damage)
+			fmt.Printf("🗡️ %s attaque avec férocité et inflige %d dégâts à %s.\n", m.Name, damage, c.Name)
 		}
 	}
 

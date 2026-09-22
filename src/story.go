@@ -1,54 +1,98 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
+	"os/exec"
 	"strings"
+	"syscall"
 	"time"
 )
 
-func waitUser() {
-	fmt.Print("\n[ Appuyez sur Entrée pour continuer... ]")
-	reader := bufio.NewReader(os.Stdin)
-	_, _ = reader.ReadString('\n')
+var procGetch = syscall.NewLazyDLL("msvcrt.dll").NewProc("_getch")
+
+// Une dll windows qui permet de detecter si une touche est appuyée, utile pour les
+// "appyuyer sur une touche pour continuer"
+
+func narrateLine(line string, charDelay time.Duration) {
+	if len(line) == 0 {
+		fmt.Println()
+		time.Sleep(charDelay * 10)
+		return
+	}
+
+	for _, ch := range line {
+		fmt.Print(string(ch))
+		switch ch {
+		case '.', '!', '?':
+			time.Sleep(charDelay * 6)
+		case ',', ';', ':':
+			time.Sleep(charDelay * 3)
+		default:
+			time.Sleep(charDelay)
+		}
+	}
+	fmt.Println()
+	time.Sleep(120 * time.Millisecond)
 }
 
-func DisplayIntroStory() {
+// Merci Gemini (syscall windows)
+func waitUser() {
+	fmt.Print("\n[ Appuyez sur une touche pour continuer... ]")
+	procGetch.Call() //Grace à la dll en haut
 	fmt.Println()
-	fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║                                                                          ║")
-	fmt.Println("║      ██████╗ ██████╗  ██████╗      ██╗███████╗████████╗    ██████╗       ║")
-	fmt.Println("║      ██╔══██╗██╔══██╗██╔═══██╗     ██║██╔════╝╚══██╔══╝    ██╔══██╗      ║")
-	fmt.Println("║      ██████╔╝██████╔╝██║   ██║     ██║█████╗     ██║       ██████╔╝      ║")
-	fmt.Println("║      ██╔═══╝ ██╔══██╗██║   ██║██   ██║██╔══╝     ██║       ██╔══██╗      ║")
-	fmt.Println("║      ██║     ██║  ██║╚██████╔╝╚█████╔╝███████╗   ██║       ██║  ██║      ║")
-	fmt.Println("║      ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚══════╝   ╚═╝       ╚═╝  ╚═╝      ║")
-	fmt.Println("║                                                                          ║")
-	fmt.Println("║              🌙  HISTOIRE 1 : LA MALÉDICTION DE LA LUNE ROUGE  🌙        ║")
-	fmt.Println("║                                                                          ║")
-	fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
+}
+
+func DisplayIntroStory(withAudio bool) *exec.Cmd {
+	/* ================= [DÉBUT CODE IA - DÉCLENCHEMENT VOIX INTRO] ================= */
+	var audioCmd *exec.Cmd
+	if withAudio {
+		audioCmd = PlayVoiceIntro()
+		time.Sleep(1200 * time.Millisecond)
+	}
+	/* ================== [FIN CODE IA - DÉCLENCHEMENT VOIX INTRO] ================== */
+
+	fmt.Println()
+	fmt.Println("╔═══════════════════════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                                                                                           ║")
+	fmt.Println("║   █████╗ ███████╗████████╗██╗  ██╗███████╗██╗      ██████╗  █████╗ ██████╗ ██████╗        ║")
+	fmt.Println("║  ██╔══██╗██╔════╝╚══██╔══╝██║  ██║██╔════╝██║     ██╔════╝ ██╔══██╗██╔══██╗██╔══██╗       ║")
+	fmt.Println("║  ███████║█████╗     ██║   ███████║█████╗  ██║     ██║  ███╗███████║██████╔╝██║  ██║       ║")
+	fmt.Println("║  ██╔══██║██╔══╝     ██║   ██╔══██║██╔══╝  ██║     ██║   ██║██╔══██║██╔══██╗██║  ██║       ║")
+	fmt.Println("║  ██║  ██║███████╗   ██║   ██║  ██║███████╗███████╗╚██████╔╝██║  ██║██║  ██║██████╔╝       ║")
+	fmt.Println("║  ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝        ║")
+	fmt.Println("║                                                                                           ║")
+	fmt.Println("║                   🌙  HISTOIRE 1 : LA MALÉDICTION DE LA LUNE ROUGE  🌙                    ║")
+	fmt.Println("║                                                                                           ║")
+	fmt.Println("╚═══════════════════════════════════════════════════════════════════════════════════════════╝")
 	fmt.Println()
 
-	time.Sleep(400 * time.Millisecond)
+	time.Sleep(800 * time.Millisecond)
 
 	introText := []string{
-		"« Tous les mille ans, le ciel s'embrase et la Lune Rouge s'éveille sur le royaume d'Aethelgard.",
-		"  Sa lueur écarlate rend les bêtes enragées et réveille les monstres des abysses.",
-		"  Les gardiens sont tombés un à un.",
+		"« Tous les mille ans, le ciel s'embrase et la Lune Rouge s'éveille sur Aethelgard.",
+		"  Sa lueur écarlate rend les bêtes enragées. Les gardiens sont tombés un à un.",
 		"",
-		"  Vous vous éveillez dans les ruines du Bastion Écarlate.",
-		"  Vous êtes le dernier Veilleur, l'ultime espoir d'éteindre la malédiction",
-		"  en terrassant le Seigneur de la Lune Rouge. »",
+		"  Vous êtes le dernier Veilleur.",
+		"  L'ultime espoir d'éteindre la malédiction en terrassant le Seigneur de la Lune Rouge.",
+		"  Que la flamme sacrée ne meure jamais. »",
 	}
 
 	for _, line := range introText {
-		fmt.Println("  " + line)
-		time.Sleep(100 * time.Millisecond)
+		narrateLine("  "+line, 48*time.Millisecond)
 	}
 
-	fmt.Println()
 	waitUser()
+
+	/* ================= [DÉBUT CODE IA - MUSIQUE DE FOND] ================= */
+	// Arrêt de la voix d'intro après validation de l'utilisateur
+	StopAudioProcess(audioCmd)
+
+	// Lancement de la musique de fond d'ambiance à volume discret
+	if withAudio {
+		CurrentBGM = PlayBackgroundMusic()
+	}
+	return CurrentBGM
+	/* ================== [FIN CODE IA - MUSIQUE DE FOND] ================== */
 }
 
 func DisplayLore() {
@@ -65,8 +109,11 @@ func DisplayLore() {
 		fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
 		fmt.Print("▶ Votre choix : ")
 
-		var choice int
-		fmt.Scan(&choice)
+		choice := -1
+		_, err := fmt.Scan(&choice)
+		if err != nil {
+			choice = -1
+		}
 		fmt.Println()
 
 		switch choice {
@@ -135,6 +182,14 @@ func DisplayLore() {
 }
 
 func DisplayVictoryEnding(heroName string) {
+	/* ================= [DÉBUT CODE IA - VOIX & MUSIQUE DE VICTOIRE] ================= */
+	var victoryVoiceCmd *exec.Cmd
+	if AudioEnabled {
+		victoryVoiceCmd = PlayVictoryVoice()
+		time.Sleep(1000 * time.Millisecond)
+	}
+	/* ================== [FIN CODE IA - VOIX & MUSIQUE DE VICTOIRE] ================== */
+
 	fmt.Println()
 	fmt.Println("██████████████████████████████████████████████████████████████████████████")
 	fmt.Println("█                                                                        █")
@@ -170,10 +225,18 @@ func DisplayVictoryEnding(heroName string) {
 	}
 
 	for _, line := range endingLines {
-		fmt.Println("  " + line)
-		time.Sleep(100 * time.Millisecond)
+		if strings.Contains(line, "═") || strings.Contains(line, "🏆") {
+			fmt.Println("  " + line)
+			time.Sleep(150 * time.Millisecond)
+		} else {
+			narrateLine("  "+line, 35*time.Millisecond)
+		}
 	}
 
 	fmt.Println()
 	waitUser()
+
+	/* ================= [DÉBUT CODE IA - ARRÊT AUDIO VICTOIRE] ================= */
+	StopAudioProcess(victoryVoiceCmd)
+	/* ================== [FIN CODE IA - ARRÊT AUDIO VICTOIRE] ================== */
 }

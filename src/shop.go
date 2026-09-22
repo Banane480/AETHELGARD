@@ -6,7 +6,7 @@ func (c *Character) Merchant() {
 	for {
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
-		fmt.Println("║               🔮  L'ÉCHOPPE DE MALAKOR L'ÉTRANGE  🔮                    ║")
+		fmt.Println("║               🔮  L'ÉCHOPPE DE MALAKOR L'ÉTRANGE  🔮                     ║")
 		fmt.Println("║   « Approche, Veilleur... Le sang de la Lune Rouge a un grand prix ! »   ║")
 		fmt.Println("╠══════════════════════════════════════════════════════════════════════════╣")
 		fmt.Printf("║  💰 Bourse du Veilleur : %-47s ║\n", fmt.Sprintf("%d $", c.Money))
@@ -25,8 +25,11 @@ func (c *Character) Merchant() {
 		fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
 		fmt.Print("▶ Que souhaitez-vous acheter auprès de Malakor ? (0-10) : ")
 
-		var choix int
-		fmt.Scan(&choix)
+		choix := -1
+		_, err := fmt.Scan(&choix)
+		if err != nil {
+			choix = -1
+		}
 		fmt.Println()
 
 		switch choix {

@@ -8,8 +8,18 @@
 *.dll
 *.so
 *.dylib
+*.zip
 bin/
+dist/
+
+# Documents exclus du dépôt
+*.html
+*.pdf
+*.txt
+voix/*.txt
+src/voix/*.txt
 
 # Fichiers temporaires & OS
 .DS_Store
 Thumbs.db
+

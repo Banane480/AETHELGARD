@@ -13,12 +13,11 @@ func (c *Character) CountItem(itemName string) int {
 }
 
 func (c *Character) Blacksmith() {
-	var choix int
 	for {
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
 		fmt.Println("║               🔨  LA FORGE RUNIQUE DE BROKK LE SANG-FORGE  🔨            ║")
-		fmt.Println("║   « Par l'enclume d'Aethelgard ! Seul l'acier forgé vaincra les ombres ! »║")
+		fmt.Println("║  « Par l'enclume d'Aethelgard ! Seul l'acier forgé vaincra les ombres ! »║")
 		fmt.Println("╠══════════════════════════════════════════════════════════════════════════╣")
 		fmt.Printf("║  💰 Bourse du Veilleur : %-47s ║\n", fmt.Sprintf("%d $", c.Money))
 		fmt.Println("╠══════════════════════════════════════════════════════════════════════════╣")
@@ -32,7 +31,11 @@ func (c *Character) Blacksmith() {
 		fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
 
 		fmt.Print("▶ Que souhaitez-vous forger auprès de Brokk ? (0-3) : ")
-		fmt.Scan(&choix)
+		choix := -1
+		_, err := fmt.Scan(&choix)
+		if err != nil {
+			choix = -1
+		}
 		fmt.Println("")
 
 		switch choix {

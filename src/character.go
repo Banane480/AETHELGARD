@@ -59,7 +59,7 @@ func CharacterCreation() Character {
 	var className string
 	var maxHP int
 	fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
-	fmt.Println("║               🧙 CRÉATION DU DERNIER VEILLEUR ÉCARLATE 🧙               ║")
+	fmt.Printf("║%15s%s%16s║\n", "", "🧙 CRÉATION DU DERNIER VEILLEUR ÉCARLATE 🧙", "")
 	fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
 
 	for {

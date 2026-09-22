@@ -9,7 +9,7 @@ func (c *Character) WhoAreThey() {
 		fmt.Println("║               🎵 MISSION 6 : QUI SONT-ILS ? 🎵            ║")
 		fmt.Println("╠══════════════════════════════════════════════════════════╣")
 		fmt.Println("║  Deux artistes célèbres se cachent dans les différentes  ║")
-		fmt.Println("║  parties du sujet du Projet RED !                        ║")
+		fmt.Println("║  parties du sujet du jeu Aethelgard !                    ║")
 		fmt.Println("╠══════════════════════════════════════════════════════════╣")
 		fmt.Println("║  [1] 📜 Révéler les artistes cachés et leurs références  ║")
 		fmt.Println("║  [2] 🎯 Faire le quiz des artistes (Récompense : 50 $)   ║")
@@ -17,8 +17,11 @@ func (c *Character) WhoAreThey() {
 		fmt.Println("╚══════════════════════════════════════════════════════════╝")
 		fmt.Print("▶ Votre choix : ")
 
-		var choice int
-		fmt.Scan(&choice)
+		choice := -1
+		_, err := fmt.Scan(&choice)
+		if err != nil {
+			choice = -1
+		}
 		fmt.Println()
 
 		switch choice {

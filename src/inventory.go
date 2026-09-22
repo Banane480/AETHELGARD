@@ -30,8 +30,11 @@ func (c *Character) AccessInventory() {
 		fmt.Println("0 - Retour")
 
 		fmt.Print("Quel objet souhaitez-vous utiliser / équiper ? (0 pour quitter) : ")
-		var choice int
-		fmt.Scan(&choice)
+		choice := -1
+		_, err := fmt.Scan(&choice)
+		if err != nil {
+			choice = -1
+		}
 		fmt.Println()
 
 		if choice == 0 {

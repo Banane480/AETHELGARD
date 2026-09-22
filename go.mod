@@ -1,3 +1,3 @@
-module RED
+module aethelgard
 
-go 1.27
+go 1.20

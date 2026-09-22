@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os/exec"
 	"time"
 )
 
@@ -26,8 +27,11 @@ func (c *Character) DungeonMenu() {
 		fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
 		fmt.Print("▶ Choisissez votre destination (0-4) : ")
 
-		var choice int
-		fmt.Scan(&choice)
+		choice := -1
+		_, err := fmt.Scan(&choice)
+		if err != nil {
+			choice = -1
+		}
 		fmt.Println()
 
 		switch choice {
@@ -134,13 +138,33 @@ func (c *Character) ExecuteCombat(m *Monster) {
 	fmt.Printf("                   Adversaire : %s (%d PV)\n", m.Name, m.LifeMax)
 	fmt.Println("⚔️ ══════════════════════════════════════════════════════════ ⚔️")
 
-	if m.IsBoss {
-		time.Sleep(300 * time.Millisecond)
-		fmt.Println("\n🌑 [SEIGNEUR DE LA LUNE ROUGE] :")
-		fmt.Println("  « Mortel insolent... Le sang de tes ancêtres a déjà nourri ma puissance.")
-		fmt.Println("    Ce sanctuaire sera ton tombeau et ta lumière s'éteindra avec toi ! »\n")
-		time.Sleep(500 * time.Millisecond)
+	/* ================= [DÉBUT CODE IA - AUDIO & NARRATION DU BOSS] ================= */
+	var bossVoiceCmd *exec.Cmd
+	var bossMusicCmd *exec.Cmd
+
+	if m.IsBoss && AudioEnabled {
+		// 1. Coupe la musique d'ambiance normale du jeu
+		StopAudioProcess(CurrentBGM)
+		// 2. Lance la voix du boss
+		bossVoiceCmd = PlayBossVoice()
 	}
+
+	if m.IsBoss {
+		time.Sleep(5500 * time.Millisecond)
+		fmt.Println("\n👹 [SEIGNEUR DE LA LUNE ROUGE] :")
+		narrateLine("  « Enfin... Le dernier vermisseau de l'Ordre des Veilleurs !", 52*time.Millisecond)
+		narrateLine("    Ton feu sacré n'est qu'une étincelle vouée au néant.", 52*time.Millisecond)
+		narrateLine("    Le ciel saigne... Aethelgard m'appartient !", 52*time.Millisecond)
+		narrateLine("    Viens périr sous la Lune Rouge ! »", 52*time.Millisecond)
+		waitUser()
+
+		// 3. Coupe la voix du boss et lance la musique de combat épique
+		StopAudioProcess(bossVoiceCmd)
+		if AudioEnabled {
+			bossMusicCmd = PlayBossMusic()
+		}
+	}
+	/* ================== [FIN CODE IA - AUDIO & NARRATION DU BOSS] ================== */
 
 	for m.Life > 0 && c.CurrentHP > 0 {
 		fmt.Printf("\n--- TOUR %d (Votre Initiative : %d | Ennemi : %d) ---\n", turn, c.Initiative, m.Initiative)
@@ -160,9 +184,38 @@ func (c *Character) ExecuteCombat(m *Monster) {
 		turn++
 	}
 
+	/* ================= [DÉBUT CODE IA - FIN DU COMBAT DU BOSS] ================= */
+	if m.IsBoss {
+		StopAudioProcess(bossMusicCmd)
+	}
+	/* ================== [FIN CODE IA - FIN DU COMBAT DU BOSS] ================== */
+
 	fmt.Println("\n=== FIN DU COMBAT ===")
 	if c.CurrentHP <= 0 {
-		fmt.Printf("💀 Défaite... Vous avez succombé face à : %s.\n", m.Name)
+		if m.IsBoss {
+			/* ================= [DÉBUT CODE IA - DÉFAITE FACE AU BOSS] ================= */
+			var defeatVoiceCmd *exec.Cmd
+			if AudioEnabled {
+				defeatVoiceCmd = PlayBossDefeatVoice()
+				time.Sleep(800 * time.Millisecond)
+			}
+
+			fmt.Println("\n🌑 [SEIGNEUR DE LA LUNE ROUGE] :")
+			narrateLine("  « Ha ha ha ha ha !", 45*time.Millisecond)
+			narrateLine("    Ton insignifiante étincelle s'éteint enfin !", 45*time.Millisecond)
+			narrateLine("    Ton sang abreuve l'Autel Écarlate...", 45*time.Millisecond)
+			narrateLine("    Aethelgard sombre dans la nuit éternelle.", 45*time.Millisecond)
+			narrateLine("    Péris dans le néant, misérable Veilleur ! »", 45*time.Millisecond)
+
+			waitUser()
+			StopAudioProcess(defeatVoiceCmd)
+			if AudioEnabled {
+				CurrentBGM = PlayBackgroundMusic()
+			}
+			/* ================== [FIN CODE IA - DÉFAITE FACE AU BOSS] ================== */
+		}
+
+		fmt.Printf("\n💀 Défaite... Vous avez succombé face à : %s.\n", m.Name)
 		c.IsDead()
 	} else if m.Life <= 0 {
 		fmt.Println()
@@ -179,6 +232,9 @@ func (c *Character) ExecuteCombat(m *Monster) {
 		if m.IsBoss {
 			time.Sleep(600 * time.Millisecond)
 			DisplayVictoryEnding(c.Name)
+			if AudioEnabled {
+				CurrentBGM = PlayBackgroundMusic()
+			}
 		}
 	}
 }
