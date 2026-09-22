@@ -5,20 +5,21 @@ import "fmt"
 func (c *Character) MainMenu() {
 	for {
 		fmt.Println()
-		fmt.Println("╔══════════════════════════════════════════╗")
-		fmt.Println("║             🏰 PROJET RED 🏰             ║")
-		fmt.Println("║              Menu Principal              ║")
-		fmt.Println("╠══════════════════════════════════════════╣")
-		fmt.Printf("║  [1] 📜 %-32s ║\n", "Fiche du personnage")
-		fmt.Printf("║  [2] 🎒 %-32s ║\n", "Consulter l'inventaire")
-		fmt.Printf("║  [3] 🧪 %-32s ║\n", "Boire une potion de soin")
-		fmt.Printf("║  [4] 🥊 %-32s ║\n", "Combat d'entrainement")
-		fmt.Printf("║  [5] 🛒 %-32s ║\n", "Visiter le marchand")
-		fmt.Printf("║  [6] 🔨 %-32s ║\n", "Visiter le forgeron")
-		fmt.Printf("║  [7] 🎵 %-32s ║\n", "Qui sont-ils ? (Mission 6)")
-		fmt.Printf("║  [0] 🚪 %-32s ║\n", "Quitter le jeu")
-		fmt.Println("╚══════════════════════════════════════════╝")
-		fmt.Print("▶ Entrez votre choix : ")
+		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
+		fmt.Println("║               🏰  BASTION DU VEILLEUR ÉCARLATE (PROJET RED)  🏰          ║")
+		fmt.Println("║                     « Que la flamme sacrée ne meure jamais »            ║")
+		fmt.Println("╠══════════════════════════════════════════════════════════════════════════╣")
+		fmt.Printf("║  [1] 📜 %-63s ║\n", "Fiche du Veilleur")
+		fmt.Printf("║  [2] 🎒 %-63s ║\n", "Consulter la sacoche d'équipement")
+		fmt.Printf("║  [3] 🧪 %-63s ║\n", "Boire un Élixir Vital (+50 PV)")
+		fmt.Printf("║  [4] ⚔️ %-63s ║\n", "Partir en Expédition (Bois, Cavernes, Autel Écarlate)")
+		fmt.Printf("║  [5] 🔮 %-63s ║\n", "Visiter l'Échoppe de Malakor l'Étrange")
+		fmt.Printf("║  [6] 🔨 %-63s ║\n", "Visiter la Forge Runique de Brokk")
+		fmt.Printf("║  [7] 📖 %-63s ║\n", "Consulter les Chroniques & Lore d'Aethelgard")
+		fmt.Printf("║  [8] 🎵 %-63s ║\n", "Qui sont-ils ? (Mission 6 : Artistes)")
+		fmt.Printf("║  [0] 🚪 %-63s ║\n", "Quitter le jeu")
+		fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
+		fmt.Print("▶ Entrez votre choix (0-8) : ")
 
 		var choix int
 		fmt.Scan(&choix)
@@ -32,15 +33,17 @@ func (c *Character) MainMenu() {
 		case 3:
 			c.TakePot()
 		case 4:
-			c.TrainingFight()
+			c.DungeonMenu()
 		case 5:
 			c.Merchant()
 		case 6:
 			c.Blacksmith()
 		case 7:
+			DisplayLore()
+		case 8:
 			c.WhoAreThey()
 		case 0:
-			fmt.Println("👋 Merci d'avoir joué ! À bientôt.")
+			fmt.Println("👋 Que les vents d'Aethelgard guident vos pas. À bientôt, Veilleur !")
 			return
 		case 42, 69, 88:
 			RickRoll()

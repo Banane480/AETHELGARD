@@ -58,12 +58,12 @@ func CharacterCreation() Character {
 	var classChoice int
 	var className string
 	var maxHP int
-	fmt.Println("╔══════════════════════════════════════════╗")
-	fmt.Println("║       🧙 CRÉATION DU PERSONNAGE 🧙       ║")
-	fmt.Println("╚══════════════════════════════════════════╝")
+	fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║               🧙 CRÉATION DU DERNIER VEILLEUR ÉCARLATE 🧙               ║")
+	fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
 
 	for {
-		fmt.Println("Entrez le nom de vôtre héros : ")
+		fmt.Print("Entrez le nom de votre héros : ")
 		fmt.Scan(&name)
 		if len(name) > 0 {
 			name = strings.ToUpper(string(name[0])) + strings.ToLower(name[1:])
@@ -76,11 +76,11 @@ func CharacterCreation() Character {
 	}
 
 	for {
-		fmt.Println("\nChoisissez votre classe : ")
-		fmt.Println("1 - Humain (100 PV)")
-		fmt.Println("2 - Elfe (80 PV)")
-		fmt.Println("3 - Nain (120 PV)")
-		fmt.Print("Choix : ")
+		fmt.Println("\nChoisissez la lignée de votre héros : ")
+		fmt.Println("1 - Humain du Bastion (100 PV)")
+		fmt.Println("2 - Elfe des Bois Obscurs (80 PV)")
+		fmt.Println("3 - Nain des Cavernes Sanguines (120 PV)")
+		fmt.Print("▶ Choix (1-3) : ")
 		fmt.Scan(&classChoice)
 
 		if classChoice == 1 {
@@ -96,10 +96,10 @@ func CharacterCreation() Character {
 			maxHP = 120
 			break
 		} else {
-			fmt.Println("Choix invalide, veuillez réessayer.")
+			fmt.Println("❌ Choix invalide, veuillez réessayer.")
 		}
 	}
-	fmt.Println("Bienvenue à toi", name, "le", className, "!")
+	fmt.Printf("\n✨ Bienvenue à toi, Veilleur %s le %s !\n", name, className)
 
 	startingInventory := []string{"Potion de soin", "Potion de soin", "Potion de soin"}
 
@@ -108,37 +108,38 @@ func CharacterCreation() Character {
 
 func (c *Character) DisplayInfo() {
 	fmt.Println()
-	fmt.Println("╔══════════════════════════════════════════╗")
-	fmt.Println("║         📜 FICHE DU PERSONNAGE           ║")
-	fmt.Println("╠══════════════════════════════════════════╣")
-	fmt.Printf("║  Nom       : %-27s ║\n", c.Name)
-	fmt.Printf("║  Classe    : %-27s ║\n", c.Class)
-	fmt.Printf("║  Niveau    : %-27d ║\n", c.Level)
-	fmt.Printf("║  XP        : %-27s ║\n", fmt.Sprintf("%d / %d", c.CurrentXP, c.MaxXP))
-	fmt.Printf("║  PV        : %-27s ║\n", fmt.Sprintf("%d / %d", c.CurrentHP, c.MaxHP))
-	fmt.Printf("║  Mana      : %-27s ║\n", fmt.Sprintf("%d / %d", c.CurrentMana, c.MaxMana))
-	fmt.Printf("║  Sorts     : %-27s ║\n", strings.Join(c.Skill, ", "))
-	fmt.Printf("║  Argent    : %-27s ║\n", fmt.Sprintf("%d $", c.Money))
-	fmt.Printf("║  Initiative: %-27d ║\n", c.Initiative)
-	fmt.Println("╠══════════════════════════════════════════╣")
-	fmt.Printf("║  Tête      : %-27s ║\n", c.Equipment.Head)
-	fmt.Printf("║  Torse     : %-27s ║\n", c.Equipment.Body)
-	fmt.Printf("║  Pieds     : %-27s ║\n", c.Equipment.Feet)
-	fmt.Println("╠══════════════════════════════════════════╣")
-	fmt.Printf("║  Sac       : %-27s ║\n", fmt.Sprintf("%d objet(s)", len(c.Inventory)))
-	fmt.Println("╚══════════════════════════════════════════╝")
+	fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
+	fmt.Println("║                   📜 FICHE DU VEILLEUR ÉCARLATE                          ║")
+	fmt.Println("╠══════════════════════════════════════════════════════════════════════════╣")
+	fmt.Printf("║  Nom       : %-59s ║\n", c.Name)
+	fmt.Printf("║  Lignée    : %-59s ║\n", c.Class)
+	fmt.Printf("║  Niveau    : %-59d ║\n", c.Level)
+	fmt.Printf("║  XP        : %-59s ║\n", fmt.Sprintf("%d / %d", c.CurrentXP, c.MaxXP))
+	fmt.Printf("║  PV        : %-59s ║\n", fmt.Sprintf("%d / %d", c.CurrentHP, c.MaxHP))
+	fmt.Printf("║  Mana      : %-59s ║\n", fmt.Sprintf("%d / %d", c.CurrentMana, c.MaxMana))
+	fmt.Printf("║  Sorts     : %-59s ║\n", strings.Join(c.Skill, ", "))
+	fmt.Printf("║  Bourse    : %-59s ║\n", fmt.Sprintf("%d $", c.Money))
+	fmt.Printf("║  Initiative: %-59d ║\n", c.Initiative)
+	fmt.Println("╠══════════════════════════════════════════════════════════════════════════╣")
+	fmt.Printf("║  Tête      : %-59s ║\n", c.Equipment.Head)
+	fmt.Printf("║  Torse     : %-59s ║\n", c.Equipment.Body)
+	fmt.Printf("║  Pieds     : %-59s ║\n", c.Equipment.Feet)
+	fmt.Println("╠══════════════════════════════════════════════════════════════════════════╣")
+	fmt.Printf("║  Sacoche   : %-59s ║\n", fmt.Sprintf("%d / %d objet(s)", len(c.Inventory), c.MaxInventory))
+	fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
 	fmt.Println()
 }
+
 func (c *Character) IsDead() bool {
 	if c.CurrentHP <= 0 {
 		fmt.Println()
-		fmt.Println("☠️ ======================================== ☠️")
-		fmt.Println("             VOUS ÊTES MORT...             ")
-		fmt.Println("   Le destin vous accorde une seconde chance !  ")
-		fmt.Println("☠️ ======================================== ☠️")
+		fmt.Println("☠️ ================================================================ ☠️")
+		fmt.Println("             VOUS AVEZ SUCCOMBÉ FACE AU FLÉAU LUNAIRE...             ")
+		fmt.Println("       Mais l'étincelle des Veilleurs refuse de s'éteindre !         ")
+		fmt.Println("☠️ ================================================================ ☠️")
 
 		c.CurrentHP = c.MaxHP / 2
-		fmt.Printf("💖 Vous revenez à la vie avec %d / %d PV.\n\n", c.CurrentHP, c.MaxHP)
+		fmt.Printf("💖 Les flammes du Bastion vous raniment avec %d / %d PV.\n\n", c.CurrentHP, c.MaxHP)
 		return true
 	}
 	return false
@@ -146,23 +147,23 @@ func (c *Character) IsDead() bool {
 
 func (c *Character) EquipItem(itemName string) {
 	if !c.RemoveInventory(itemName) {
-		fmt.Printf("❌ Vous ne possédez pas : %s dans votre inventaire !\n", itemName)
+		fmt.Printf("❌ Vous ne possédez pas : %s dans votre sacoche !\n", itemName)
 		return
 	}
 
 	switch itemName {
-	case "Chapeau de l'aventurier":
+	case "Capuche du Veilleur", "Chapeau de l'aventurier":
 		if c.Equipment.Head == itemName {
-			fmt.Println("⚠️ Vous portez déjà ce chapeau !")
+			fmt.Println("⚠️ Vous portez déjà cette coiffe !")
 			c.AddInventory(itemName)
 			return
 		}
 		c.Equipment.Head = itemName
 		c.MaxHP += 10
 		c.CurrentHP += 10
-		fmt.Println("👒 Vous avez équipé le Chapeau de l'aventurier (+10 PV max) !")
+		fmt.Printf("👒 Vous avez équipé [%s] (+10 PV max) !\n", itemName)
 
-	case "Tunique de l'aventurier":
+	case "Tunique en Peau d'Ombre", "Tunique de l'aventurier":
 		if c.Equipment.Body == itemName {
 			fmt.Println("⚠️ Vous portez déjà cette tunique !")
 			c.AddInventory(itemName)
@@ -171,9 +172,9 @@ func (c *Character) EquipItem(itemName string) {
 		c.Equipment.Body = itemName
 		c.MaxHP += 25
 		c.CurrentHP += 25
-		fmt.Println("🥋 Vous avez équipé la Tunique de l'aventurier (+25 PV max) !")
+		fmt.Printf("🥋 Vous avez équipé [%s] (+25 PV max) !\n", itemName)
 
-	case "Bottes de l'aventurier":
+	case "Bottes de Traqueur", "Bottes de l'aventurier":
 		if c.Equipment.Feet == itemName {
 			fmt.Println("⚠️ Vous portez déjà ces bottes !")
 			c.AddInventory(itemName)
@@ -182,7 +183,7 @@ func (c *Character) EquipItem(itemName string) {
 		c.Equipment.Feet = itemName
 		c.MaxHP += 15
 		c.CurrentHP += 15
-		fmt.Println("👢 Vous avez équipé les Bottes de l'aventurier (+15 PV max) !")
+		fmt.Printf("👢 Vous avez équipé [%s] (+15 PV max) !\n", itemName)
 
 	default:
 		c.AddInventory(itemName)
@@ -192,7 +193,7 @@ func (c *Character) EquipItem(itemName string) {
 
 func (c *Character) GainXP(amount int) {
 	c.CurrentXP += amount
-	fmt.Println("Vous avez gagné", amount, "XP !")
+	fmt.Printf("⭐ Vous avez gagné %d XP !\n", amount)
 
 	for c.CurrentXP >= c.MaxXP {
 		c.LevelUp()
@@ -205,5 +206,5 @@ func (c *Character) LevelUp() {
 	c.MaxXP += 100
 	c.MaxHP += 10
 	c.CurrentHP = c.MaxHP
-	fmt.Println("Bravo, vous êtes niveau", c.Level, "!")
+	fmt.Printf("🔥 ÉLÉVATION ! Vous atteignez le Niveau %d des Veilleurs ! (+10 PV max)\n", c.Level)
 }
