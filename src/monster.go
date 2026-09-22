@@ -15,7 +15,6 @@ type Monster struct {
 	ZoneName    string
 }
 
-// InitGoblin permet de conserver la compatibilité avec l'ancien code d'entraînement
 func InitGoblin(name string, lifeMax int, life int, attaque int, initiative int) Monster {
 	return Monster{
 		Name:        name,
@@ -31,7 +30,6 @@ func InitGoblin(name string, lifeMax int, life int, attaque int, initiative int)
 	}
 }
 
-// InitEnragedGoblin crée le monstre de la Zone 1 : Les Bois Obscurs
 func InitEnragedGoblin() Monster {
 	return Monster{
 		Name:        "Gobelin Enragé",
@@ -47,7 +45,6 @@ func InitEnragedGoblin() Monster {
 	}
 }
 
-// InitCorruptedTroll crée le monstre de la Zone 2 : Les Cavernes Sanguines
 func InitCorruptedTroll() Monster {
 	return Monster{
 		Name:        "Troll Corrompu",
@@ -63,7 +60,6 @@ func InitCorruptedTroll() Monster {
 	}
 }
 
-// InitRedMoonLord crée le Boss Final de la Zone 3 : L'Autel Écarlate
 func InitRedMoonLord() Monster {
 	return Monster{
 		Name:        "Seigneur de la Lune Rouge",
@@ -79,12 +75,10 @@ func InitRedMoonLord() Monster {
 	}
 }
 
-// GoblinPattern gère l'attaque du Gobelin (conservé pour compatibilité)
 func GoblinPattern(m *Monster, c *Character, turn int) {
 	MonsterPattern(m, c, turn)
 }
 
-// MonsterPattern gère les attaques des monstres avec des comportements uniques
 func MonsterPattern(m *Monster, c *Character, turn int) {
 	damage := m.Attaque
 
@@ -108,7 +102,7 @@ func MonsterPattern(m *Monster, c *Character, turn int) {
 			fmt.Printf("🥊 %s assène un coup violent et inflige %d dégâts à %s.\n", m.Name, damage, c.Name)
 		}
 
-	default: // Gobelin Enragé / d'entraînement
+	default:
 		if turn%3 == 0 {
 			damage *= 2
 			fmt.Printf("💥 Coup critique ! %s utilise une attaque féroce et inflige %d dégâts à %s !\n", m.Name, damage, c.Name)

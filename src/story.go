@@ -14,7 +14,6 @@ func waitUser() {
 	_, _ = reader.ReadString('\n')
 }
 
-// DisplayIntroStory affiche la cinématique d'introduction au lancement du jeu
 func DisplayIntroStory() {
 	fmt.Println()
 	fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
@@ -52,7 +51,6 @@ func DisplayIntroStory() {
 	waitUser()
 }
 
-// DisplayLore affiche les chroniques du monde d'Aethelgard et des sanctuaires
 func DisplayLore() {
 	for {
 		fmt.Println()
@@ -136,7 +134,6 @@ func DisplayLore() {
 	}
 }
 
-// DisplayVictoryEnding affiche l'écran de fin glorieux lorsque le joueur terrasse le Boss Final
 func DisplayVictoryEnding(heroName string) {
 	fmt.Println()
 	fmt.Println("██████████████████████████████████████████████████████████████████████████")

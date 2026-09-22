@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-// DungeonMenu permet au joueur de choisir sa zone d'expédition
 func (c *Character) DungeonMenu() {
 	for {
 		fmt.Println()
@@ -51,7 +50,6 @@ func (c *Character) DungeonMenu() {
 	}
 }
 
-// CharacterTurn gère le tour d'action du joueur
 func CharacterTurn(c *Character, m *Monster) {
 	for {
 		var choice int
@@ -127,7 +125,6 @@ func CharacterTurn(c *Character, m *Monster) {
 	}
 }
 
-// ExecuteCombat gère le combat complet au tour par tour contre n'importe quel monstre
 func (c *Character) ExecuteCombat(m *Monster) {
 	turn := 1
 
@@ -186,7 +183,6 @@ func (c *Character) ExecuteCombat(m *Monster) {
 	}
 }
 
-// TrainingFight conserve le combat d'entraînement initial pour compatibilité
 func (c *Character) TrainingFight() {
 	m := InitGoblin("Gobelin d'entrainement", 40, 40, 5, 5)
 	c.ExecuteCombat(&m)
