@@ -93,33 +93,31 @@ func CharacterTurn(c *Character, m *Monster) {
 			}
 
 		case 2:
-			c.DisplayInventory()
-			fmt.Println("\n--- OBJETS UTILISABLES ---")
-			fmt.Println("1 : Potion de soin / Élixir Vital (+50 PV)")
-			fmt.Println("2 : Potion de mana / Essence de Mana (+30 Mana)")
-			fmt.Println("3 : Retour")
+			if len(c.Inventory) == 0 {
+				fmt.Println("❌ Votre sacoche est vide !")
+				continue
+			}
+
+			fmt.Println("\n--- OBJETS DANS LA SACOCHE ---")
+			for i, item := range c.Inventory {
+				fmt.Printf("%d : %s\n", i+1, item)
+			}
+			fmt.Printf("%d : Retour\n", len(c.Inventory)+1)
 			fmt.Print("Votre choix : ")
+
 			var itemChoice int
 			fmt.Scan(&itemChoice)
 
-			if itemChoice == 1 {
-				if c.CountItem("Potion de soin") == 0 {
-					fmt.Println("❌ Vous n'avez pas d'Élixir Vital / Potion de soin !")
-					continue
-				}
-				c.TakePot()
-				return
-			} else if itemChoice == 2 {
-				if c.CountItem("Potion de mana") == 0 {
-					fmt.Println("❌ Vous n'avez pas d'Essence de Mana / Potion de mana !")
-					continue
-				}
-				c.TakeManaPot()
-				return
-			} else if itemChoice == 3 {
+			if itemChoice == len(c.Inventory)+1 {
 				continue
+			}
+
+			if itemChoice >= 1 && itemChoice <= len(c.Inventory) {
+				selectedItem := c.Inventory[itemChoice-1]
+				c.UseItem(selectedItem)
+				return
 			} else {
-				fmt.Println("❌ Choix invalide.")
+				fmt.Println("❌ Choix d'objet invalide.")
 				continue
 			}
 
