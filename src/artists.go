@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func (c *Character) WhoAreThey() {
 	for {
+		ClearConsole()
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════╗")
 		fmt.Println("║               🎵 MISSION 6 : QUI SONT-ILS ? 🎵            ║")
@@ -33,6 +37,7 @@ func (c *Character) WhoAreThey() {
 			return
 		default:
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
+			time.Sleep(1200 * time.Millisecond)
 		}
 	}
 }
@@ -56,6 +61,7 @@ func (c *Character) RevealArtists() {
 	fmt.Println("║                                                          ║")
 	fmt.Println("╚══════════════════════════════════════════════════════════╝")
 	fmt.Println()
+	waitUser()
 }
 
 func (c *Character) QuizArtists() {
@@ -89,4 +95,5 @@ func (c *Character) QuizArtists() {
 	} else {
 		fmt.Println("\n❌ Mauvaise réponse... Regardez les indices dans l'option 1 et réessayez !")
 	}
+	waitUser()
 }

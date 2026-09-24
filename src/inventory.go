@@ -17,10 +17,12 @@ func (c *Character) DisplayInventory() {
 
 func (c *Character) AccessInventory() {
 	for {
+		ClearConsole()
 		fmt.Println("\n--- SACOCHE D'ÉQUIPEMENT DU VEILLEUR ---")
 		fmt.Printf("Capacité : %d / %d objets\n", len(c.Inventory), c.MaxInventory)
 		if len(c.Inventory) == 0 {
 			fmt.Println("Votre sacoche est vide !")
+			waitUser()
 			return
 		}
 
@@ -43,11 +45,13 @@ func (c *Character) AccessInventory() {
 
 		if choice < 1 || choice > len(c.Inventory) {
 			fmt.Println("❌ Choix invalide.")
+			time.Sleep(1200 * time.Millisecond)
 			continue
 		}
 
 		selectedItem := c.Inventory[choice-1]
 		c.UseItem(selectedItem)
+		waitUser()
 	}
 }
 

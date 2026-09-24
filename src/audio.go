@@ -7,10 +7,10 @@ import (
 	"os/exec"
 	"os/signal"
 	"path/filepath"
+	"runtime"
 	"syscall"
 )
 
-//go:embed voix/*
 var embeddedAudio embed.FS
 
 /* ===========================================================================
@@ -232,3 +232,20 @@ func PlayBossDefeatVoice() *exec.Cmd {
 /* ===========================================================================
    🤖 [FIN CODE IA - MODULE AUDIO & NARRATION VOCALE SUNO / TTS]
    =========================================================================== */
+
+// ClearConsole efface l'écran du terminal (compatible Windows, Linux & macOS)
+func ClearConsole() {
+	// 1. Séquence d'échappement ANSI VT100 pour effacer l'écran et réinitialiser le curseur en haut à gauche
+	fmt.Print("\033[H\033[2J")
+
+	// 2. Exécution de la commande système (cls sur Windows, clear sur Linux/macOS)
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/c", "cls")
+	} else {
+		cmd = exec.Command("clear")
+	}
+	cmd.Stdout = os.Stdout
+	_ = cmd.Run()
+}
+

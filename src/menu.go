@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func (c *Character) MainMenu() {
 	for {
+		ClearConsole()
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
 		fmt.Printf("║%12s%s%12s║\n", "", "🏰  BASTION D'AETHELGARD — ORDRE DES VEILLEURS  🏰", "")
@@ -31,10 +35,12 @@ func (c *Character) MainMenu() {
 		switch choix {
 		case 1:
 			c.DisplayInfo()
+			waitUser()
 		case 2:
 			c.AccessInventory()
 		case 3:
 			c.TakePot()
+			waitUser()
 		case 4:
 			c.DungeonMenu()
 		case 5:
@@ -51,8 +57,10 @@ func (c *Character) MainMenu() {
 			return
 		case 42, 69, 88:
 			RickRoll()
+			waitUser()
 		default:
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
+			time.Sleep(1200 * time.Millisecond)
 		}
 	}
 }

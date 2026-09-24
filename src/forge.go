@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func (c *Character) CountItem(itemName string) int {
 	count := 0
@@ -14,6 +17,7 @@ func (c *Character) CountItem(itemName string) int {
 
 func (c *Character) Blacksmith() {
 	for {
+		ClearConsole()
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
 		fmt.Println("║               🔨  LA FORGE RUNIQUE DE BROKK LE SANG-FORGE  🔨            ║")
@@ -41,15 +45,20 @@ func (c *Character) Blacksmith() {
 		switch choix {
 		case 1:
 			c.CraftHat()
+			waitUser()
 		case 2:
 			c.CraftTunic()
+			waitUser()
 		case 3:
 			c.CraftBoots()
+			waitUser()
 		case 0:
 			fmt.Println("👋 Brokk cogne son marteau : « Reviens quand tu auras de quoi forger du lourd, Veilleur ! »")
+			time.Sleep(1200 * time.Millisecond)
 			return
 		default:
 			fmt.Println("❌ Choix invalide !")
+			time.Sleep(1200 * time.Millisecond)
 		}
 	}
 }

@@ -97,6 +97,7 @@ func DisplayIntroStory(withAudio bool) *exec.Cmd {
 
 func DisplayLore() {
 	for {
+		ClearConsole()
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
 		fmt.Println("║              📖  LES CHRONIQUES DU ROYAUME D'AETHELGARD  📖              ║")
@@ -177,11 +178,13 @@ func DisplayLore() {
 
 		default:
 			fmt.Println("❌ Choix invalide.")
+			time.Sleep(1200 * time.Millisecond)
 		}
 	}
 }
 
 func DisplayVictoryEnding(heroName string) {
+	ClearConsole()
 	/* ================= [DÉBUT CODE IA - VOIX & MUSIQUE DE VICTOIRE] ================= */
 	var victoryVoiceCmd *exec.Cmd
 	if AudioEnabled {

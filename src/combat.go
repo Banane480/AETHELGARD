@@ -8,6 +8,7 @@ import (
 
 func (c *Character) DungeonMenu() {
 	for {
+		ClearConsole()
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
 		fmt.Println("║                  🗺️  TABLE DES EXPÉDITIONS D'AETHELGARD  🗺️              ║")
@@ -50,6 +51,7 @@ func (c *Character) DungeonMenu() {
 			return
 		default:
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
+			time.Sleep(1200 * time.Millisecond)
 		}
 	}
 }
@@ -128,6 +130,7 @@ func CharacterTurn(c *Character, m *Monster) {
 }
 
 func (c *Character) ExecuteCombat(m *Monster) {
+	ClearConsole()
 	turn := 1
 
 	fmt.Println()
@@ -165,6 +168,11 @@ func (c *Character) ExecuteCombat(m *Monster) {
 	/* ================== [FIN CODE IA - AUDIO & NARRATION DU BOSS] ================== */
 
 	for m.Life > 0 && c.CurrentHP > 0 {
+		ClearConsole()
+		fmt.Println("⚔️ ══════════════════════════════════════════════════════════ ⚔️")
+		fmt.Printf("               EXPÉDITION : %s\n", m.ZoneName)
+		fmt.Printf("                   Adversaire : %s (%d PV)\n", m.Name, m.LifeMax)
+		fmt.Println("⚔️ ══════════════════════════════════════════════════════════ ⚔️")
 		fmt.Printf("\n--- TOUR %d (Votre Initiative : %d | Ennemi : %d) ---\n", turn, c.Initiative, m.Initiative)
 
 		if c.Initiative >= m.Initiative {
@@ -179,6 +187,10 @@ func (c *Character) ExecuteCombat(m *Monster) {
 			}
 		}
 
+		if m.Life > 0 && c.CurrentHP > 0 {
+			waitUser()
+		}
+
 		turn++
 	}
 
@@ -188,6 +200,7 @@ func (c *Character) ExecuteCombat(m *Monster) {
 	}
 	/* ================== [FIN CODE IA - FIN DU COMBAT DU BOSS] ================== */
 
+	ClearConsole()
 	fmt.Println("\n=== FIN DU COMBAT ===")
 	if c.CurrentHP <= 0 {
 		if m.IsBoss {
@@ -215,6 +228,7 @@ func (c *Character) ExecuteCombat(m *Monster) {
 
 		fmt.Printf("\n💀 Défaite... Vous avez succombé face à : %s.\n", m.Name)
 		c.IsDead()
+		waitUser()
 	} else if m.Life <= 0 {
 		fmt.Println()
 		fmt.Printf("🎉 VICTOIRE ÉCLATANTE ! Vous avez vaincu : %s !\n", m.Name)
@@ -233,6 +247,8 @@ func (c *Character) ExecuteCombat(m *Monster) {
 			if AudioEnabled {
 				CurrentBGM = PlayBackgroundMusic()
 			}
+		} else {
+			waitUser()
 		}
 	}
 }

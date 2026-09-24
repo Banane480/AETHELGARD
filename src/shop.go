@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func (c *Character) Merchant() {
 	for {
+		ClearConsole()
 		fmt.Println()
 		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
 		fmt.Println("║               🔮  L'ÉCHOPPE DE MALAKOR L'ÉTRANGE  🔮                     ║")
@@ -35,20 +39,28 @@ func (c *Character) Merchant() {
 		switch choix {
 		case 1:
 			c.BuyItem("Potion de soin", 3)
+			waitUser()
 		case 2:
 			c.BuyItem("Potion de poison", 6)
+			waitUser()
 		case 3:
 			c.BuyItem("Potion de mana", 10)
+			waitUser()
 		case 4:
 			c.BuyItem("Fourrure de loup", 4)
+			waitUser()
 		case 5:
 			c.BuyItem("Peau de troll", 7)
+			waitUser()
 		case 6:
 			c.BuyItem("Cuir de sanglier", 3)
+			waitUser()
 		case 7:
 			c.BuyItem("Plume de corbeau", 1)
+			waitUser()
 		case 8:
 			c.BuyItem("Minerai de Fer", 7)
+			waitUser()
 		case 9:
 			if c.Money < 25 {
 				fmt.Println("❌ Malakor ricane : « Pas assez d'or pour ce grimoire sacré ! »")
@@ -57,10 +69,13 @@ func (c *Character) Merchant() {
 				c.SpellBook("Boule de Feu")
 				fmt.Printf("💰 Achat du Grimoire réussi ! Bourse restante : %d $\n", c.Money)
 			}
+			waitUser()
 		case 10:
 			c.UppgradeInventorySlot()
+			waitUser()
 		case 0:
 			fmt.Println("👋 Malakor s'incline dans l'ombre : « Que la Lune Rouge épargne tes pas, Veilleur... »")
+			time.Sleep(1200 * time.Millisecond)
 			return
 		case 67:
 			fmt.Println("⚡ EASTER EGG : GOD MOD ACTIVÉ ⚡")
@@ -72,10 +87,13 @@ func (c *Character) Merchant() {
 			c.Money = 999
 			c.Initiative = 999
 			c.Skill = append(c.Skill, "GOD MODE")
+			waitUser()
 		case 6767:
 			Play67Kid()
+			waitUser()
 		default:
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
+			time.Sleep(1200 * time.Millisecond)
 		}
 	}
 }

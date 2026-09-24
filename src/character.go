@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 type Character struct {
@@ -54,6 +55,7 @@ func InitCharacter(name string, class string, level int, maxHP int, currentHP in
 }
 
 func CharacterCreation() Character {
+	ClearConsole()
 	var name string
 	var classChoice int
 	var className string
@@ -76,6 +78,11 @@ func CharacterCreation() Character {
 	}
 
 	for {
+		ClearConsole()
+		fmt.Println("╔══════════════════════════════════════════════════════════════════════════╗")
+		fmt.Printf("║%15s%s%16s║\n", "", "🧙 CRÉATION DU DERNIER VEILLEUR ÉCARLATE 🧙", "")
+		fmt.Println("╚══════════════════════════════════════════════════════════════════════════╝")
+		fmt.Printf("\nHéros : %s\n", name)
 		fmt.Println("\nChoisissez la lignée de votre héros : ")
 		fmt.Println("1 - Humain du Bastion (100 PV)")
 		fmt.Println("2 - Elfe des Bois Obscurs (80 PV)")
@@ -97,9 +104,12 @@ func CharacterCreation() Character {
 			break
 		} else {
 			fmt.Println("❌ Choix invalide, veuillez réessayer.")
+			time.Sleep(1200 * time.Millisecond)
 		}
 	}
+	ClearConsole()
 	fmt.Printf("\n✨ Bienvenue à toi, Veilleur %s le %s !\n", name, className)
+	time.Sleep(1500 * time.Millisecond)
 
 	startingInventory := []string{"Potion de soin", "Potion de soin", "Potion de soin"}
 
